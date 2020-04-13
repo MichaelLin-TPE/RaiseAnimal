@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "331331181779",
+    "firebase_url": "https://raiseanimal-fe919.firebaseio.com",
+    "project_id": "raiseanimal-fe919",
+    "storage_bucket": "raiseanimal-fe919.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:331331181779:android:0e6a8f97f025d78cf58826",
+        "android_client_info": {
+          "package_name": "com.raise.raiseanimal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "331331181779-rcbeab46ebchgbtacfa746lnhl4jokh0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.raise.raiseanimal",
+            "certificate_hash": "00d7337d49986052fd9fd604f4db476e8076034e"
+          }
+        },
+        {
+          "client_id": "331331181779-etkdh1m2mhhrhnggl0c49c099fb9kgan.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUdBwg_98e5eohlKnGY1z0pVqra7T4s40"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "331331181779-etkdh1m2mhhrhnggl0c49c099fb9kgan.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

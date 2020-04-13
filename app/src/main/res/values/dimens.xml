@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="tab_icon_size">30dp</dimen>
+    <dimen name="tab_title_size">15dp</dimen>
+    <dimen name="normal_text_size">15sp</dimen>
+    <dimen name="animal_photo_width">110dp</dimen>
+    <dimen name="animal_photo_height">80dp</dimen>
+    <dimen name="detail_photo_height">240dp</dimen>
+    <dimen name="tag_title_width">60dp</dimen>
+    <dimen name="tag_title_height">30dp</dimen>
+    <dimen name="foot_icon_width">40dp</dimen>
+    <dimen name="title_size">20sp</dimen>
+    <dimen name="view_pager_height">240dp</dimen>
+    <dimen name="information_size">18sp</dimen>
+</resources>

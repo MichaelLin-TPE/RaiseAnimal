@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">RaiseAnimal</string>
+    <string name="next_page">下一頁</string>
+    <string name="home_of_animal">動物之家(非官方)</string>
+    <string name="animal">動物</string>
+    <string name="personal">個人</string>
+    <string name="staff">志工</string>
+    <string name="test_btn">測試用</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shelter">新北市板橋區公立動物之家</string>
+    <string name="not_provide">尚未提供</string>
+    <string name="dog">狗</string>
+    <string name="information">宣導事項</string>
+    <string name="go_select">開始領養</string>
+    <string name="no_show_again">不再顯示</string>
+    <string name="i_know">我知道了</string>
+    <string name="all_information">●●認養資格 \n1. 需年滿20歲 \n2. 攜帶你的 [身分證] 和狗的 [牽繩或提籠]\n\n●●認養方式 \n請於動物之家開放時間內前往看狗 \n有意願認養即可現場辦理認養手續 \n((認養不能預約，不能保留，以現場辦理為主))  \n\n●●新北市目前認養不用費用，但請務必考慮清楚，毛小孩有10-15年的壽命，一輩子有很多花費，認養了就要對他負責!!</string>
 </resources>

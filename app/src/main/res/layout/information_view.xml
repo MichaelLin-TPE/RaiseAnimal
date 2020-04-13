@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:paddingTop="30dp"
+    android:paddingStart="15dp"
+    android:paddingEnd="15dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/detail_icon"
+        android:src="@drawable/foot_icon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:contentDescription="@null"
+        android:layout_width="@dimen/foot_icon_width"
+        android:layout_height="@dimen/foot_icon_width"/>
+
+
+    <TextView
+        android:id="@+id/detail_number"
+        android:textSize="@dimen/normal_text_size"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        tools:text="編號 : 59679"
+        app:layout_constraintTop_toTopOf="@id/detail_icon"
+        app:layout_constraintBottom_toBottomOf="@id/detail_icon"
+        app:layout_constraintLeft_toRightOf="@id/detail_icon"
+        android:layout_marginStart="10dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/detail_name"
+        android:textSize="@dimen/normal_text_size"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        tools:text="名字 : 小黃"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@id/detail_number"
+        app:layout_constraintLeft_toLeftOf="@id/detail_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/detail_sex"
+        android:textSize="@dimen/normal_text_size"
+        android:textColor="@color/black"
+        tools:text="性別 : 公"
+        android:textStyle="bold"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@id/detail_name"
+        app:layout_constraintLeft_toLeftOf="@id/detail_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/detail_no_sex"
+        android:textSize="@dimen/normal_text_size"
+        android:textColor="@color/black"
+        tools:text="是否已結育 : 是"
+        android:textStyle="bold"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@id/detail_sex"
+        app:layout_constraintLeft_toLeftOf="@id/detail_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:id="@+id/detail_location"
+        android:textStyle="bold"
+        android:textSize="@dimen/normal_text_size"
+        android:textColor="@color/black"
+        tools:text="目前所在地"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@id/detail_no_sex"
+        app:layout_constraintLeft_toLeftOf="@id/detail_no_sex"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/detail_why"
+        android:textSize="@dimen/normal_text_size"
+        android:textColor="@color/black"
+        tools:text="入園原因"
+        android:layout_marginTop="25dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/detail_location"
+        app:layout_constraintLeft_toLeftOf="@id/detail_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <TextView
+        android:id="@+id/detail_story"
+        android:textSize="@dimen/normal_text_size"
+        android:textColor="@color/black"
+        tools:text="待志工新增......"
+        android:gravity="center"
+        android:background="@drawable/tag_item_shape"
+        android:layout_marginTop="25dp"
+        app:layout_constraintTop_toBottomOf="@id/detail_why"
+        app:layout_constraintLeft_toLeftOf="@id/detail_why"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
