@@ -17,4 +17,9 @@
     <string name="no_show_again">不再顯示</string>
     <string name="i_know">我知道了</string>
     <string name="all_information">●●認養資格 \n1. 需年滿20歲 \n2. 攜帶你的 [身分證] 和狗的 [牽繩或提籠]\n\n●●認養方式 \n請於動物之家開放時間內前往看狗 \n有意願認養即可現場辦理認養手續 \n((認養不能預約，不能保留，以現場辦理為主))  \n\n●●新北市目前認養不用費用，但請務必考慮清楚，毛小孩有10-15年的壽命，一輩子有很多花費，認養了就要對他負責!!</string>
+    <string name="no_sex">是否已結育 : </string>
+    <string name="size">體型 :</string>
+    <string name="sex">性別 :</string>
+    <string name="color">毛色 :</string>
+    <string name="search_no_data">查無資料唷</string>
 </resources>

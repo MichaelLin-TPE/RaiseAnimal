@@ -12,4 +12,7 @@
     <dimen name="title_size">20sp</dimen>
     <dimen name="view_pager_height">240dp</dimen>
     <dimen name="information_size">18sp</dimen>
+    <dimen name="filter_item_width">60dp</dimen>
+    <dimen name="filter_item_height">30dp</dimen>
+    <dimen name="normal_icon_size">70dp</dimen>
 </resources>

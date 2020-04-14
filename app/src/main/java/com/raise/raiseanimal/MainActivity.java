@@ -60,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements MainActivityVu {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //這裡進版圖 未來做
         initPresenter();
         initView();
         boolean isShowDialog = UserDataManager.getInstance(this).isShow();

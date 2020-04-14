@@ -14,4 +14,6 @@ public interface AnimalPresenter {
     void catchNewData(ArrayList<AnimalObject> dataArray);
 
     void onAnimalItemClickListener(AnimalObject data);
+
+    void onFilterItemClickListener(String name, String value);
 }

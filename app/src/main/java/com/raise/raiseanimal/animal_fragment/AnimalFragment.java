@@ -2,6 +2,7 @@ package com.raise.raiseanimal.animal_fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -9,13 +10,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -27,6 +31,10 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.raise.raiseanimal.R;
+import com.raise.raiseanimal.animal_fragment.filter.FilterAdapter;
+import com.raise.raiseanimal.animal_fragment.filter.FilterItemAdapter;
+import com.raise.raiseanimal.animal_fragment.filter.FilterPresenter;
+import com.raise.raiseanimal.animal_fragment.filter.FilterPresenterImpl;
 import com.raise.raiseanimal.connect.gson_object.AnimalObject;
 import com.raise.raiseanimal.detail_activity.DetailActivity;
 
@@ -40,7 +48,7 @@ public class AnimalFragment extends Fragment implements AnimalVu {
 
     private AnimalPresenter presenter;
 
-    private RecyclerView recyclerView;
+    private RecyclerView recyclerView,rvFilter;
 
     private Context context;
 
@@ -50,13 +58,19 @@ public class AnimalFragment extends Fragment implements AnimalVu {
 
     private Gson gson;
 
+    private TextView tvSearchInfo;
+
+    private ImageView ivLogo;
+
+    private FilterPresenter filterPresenter;
+
     private static final String ANIMAL_DATA = "animal_data";
     private static final String DATA = "data";
 
     private FirebaseFirestore firestore;
 
     @Override
-    public void onAttach(Context context) {
+    public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         this.context = context;
     }
@@ -82,6 +96,10 @@ public class AnimalFragment extends Fragment implements AnimalVu {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context,3);
         recyclerView.setLayoutManager(gridLayoutManager);
         progressBar = view.findViewById(R.id.animal_progress);
+        rvFilter = view.findViewById(R.id.animal_filter_recycler_view);
+        rvFilter.setLayoutManager(new LinearLayoutManager(context));
+        tvSearchInfo = view.findViewById(R.id.animal_search_info);
+        ivLogo = view.findViewById(R.id.animal_icon);
     }
 
     @Override
@@ -98,6 +116,7 @@ public class AnimalFragment extends Fragment implements AnimalVu {
 
     private void initPresenter() {
         presenter = new AnimalPresenterImpl(this);
+        filterPresenter = new FilterPresenterImpl();
     }
 
     @Override
@@ -244,5 +263,27 @@ public class AnimalFragment extends Fragment implements AnimalVu {
     @Override
     public String getDogStr() {
         return getActivity() != null ? getActivity().getString(R.string.dog) : "";
+    }
+
+    @Override
+    public void showFilterView(ArrayList<String> colorArray, ArrayList<String> noSexArray, ArrayList<String> sexArray, ArrayList<String> sizeArray) {
+        filterPresenter.setColorData(colorArray);
+        filterPresenter.setNoSexData(noSexArray);
+        filterPresenter.setSexData(sexArray);
+        filterPresenter.setSizeData(sizeArray);
+        FilterAdapter adapter = new FilterAdapter(filterPresenter,context);
+        rvFilter.setAdapter(adapter);
+        adapter.setOnFilterItemClickListener(new FilterItemAdapter.OnFilterItemClickListener() {
+            @Override
+            public void onClick(String name,String value) {
+                presenter.onFilterItemClickListener(name,value);
+            }
+        });
+    }
+
+    @Override
+    public void showSearchNoData(boolean isShow) {
+        tvSearchInfo.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        ivLogo.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 }

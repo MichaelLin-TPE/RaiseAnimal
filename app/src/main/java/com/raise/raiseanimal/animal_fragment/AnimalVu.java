@@ -16,4 +16,8 @@ public interface AnimalVu {
     void intentToDetailPage(AnimalObject data);
 
     String getDogStr();
+
+    void showFilterView(ArrayList<String> colorArray, ArrayList<String> noSexArray, ArrayList<String> sexArray, ArrayList<String> sizeArray);
+
+    void showSearchNoData(boolean isShow);
 }

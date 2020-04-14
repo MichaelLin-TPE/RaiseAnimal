@@ -7,9 +7,43 @@
     tools:context=".animal_fragment.AnimalFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/animal_recycler_view"
+        android:id="@+id/animal_filter_recycler_view"
+        app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"/>
+
+    <ImageView
+        app:layout_constraintTop_toTopOf="@id/animal_recycler_view"
+        android:contentDescription="@null"
+        android:id="@+id/animal_icon"
+        android:visibility="gone"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="@id/animal_recycler_view"
+        app:layout_constraintLeft_toLeftOf="@id/animal_recycler_view"
+        app:layout_constraintRight_toRightOf="@id/animal_recycler_view"
+        android:src="@drawable/foot_icon"
+        android:layout_width="@dimen/normal_icon_size"
+        android:layout_height="@dimen/normal_icon_size"/>
+
+    <TextView
+        android:id="@+id/animal_search_info"
+        android:text="@string/search_no_data"
+        android:textSize="@dimen/normal_text_size"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/animal_icon"
+        app:layout_constraintLeft_toLeftOf="@id/animal_icon"
+        app:layout_constraintRight_toRightOf="@id/animal_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/animal_recycler_view"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/animal_filter_recycler_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
 
     <ProgressBar
         android:id="@+id/animal_progress"
