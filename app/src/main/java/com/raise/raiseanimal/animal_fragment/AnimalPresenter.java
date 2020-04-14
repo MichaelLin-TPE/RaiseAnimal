@@ -2,14 +2,16 @@ package com.raise.raiseanimal.animal_fragment;
 
 import com.raise.raiseanimal.connect.gson_object.AnimalObject;
 
+import java.util.ArrayList;
+
 public interface AnimalPresenter {
     void startToCatchData();
 
-    void catchData(String json);
+    void catchData(ArrayList<AnimalObject> dataArray);
 
     void onShowProgress(boolean isShow);
 
-    void catchNewData(String json);
+    void catchNewData(ArrayList<AnimalObject> dataArray);
 
     void onAnimalItemClickListener(AnimalObject data);
 }

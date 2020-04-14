@@ -24,12 +24,15 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.raise.raiseanimal.R;
 import com.raise.raiseanimal.connect.gson_object.AnimalObject;
 import com.raise.raiseanimal.detail_activity.DetailActivity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -44,6 +47,8 @@ public class AnimalFragment extends Fragment implements AnimalVu {
     private ProgressBar progressBar;
 
     private AnimalAdapter animalAdapter;
+
+    private Gson gson;
 
     private static final String ANIMAL_DATA = "animal_data";
     private static final String DATA = "data";
@@ -84,6 +89,7 @@ public class AnimalFragment extends Fragment implements AnimalVu {
         super.onCreate(savedInstanceState);
         initPresenter();
         initFirebase();
+        gson = new Gson();
     }
 
     private void initFirebase() {
@@ -129,7 +135,11 @@ public class AnimalFragment extends Fragment implements AnimalVu {
 
                             DocumentSnapshot snapshot = task.getResult();
                             String json = (String) snapshot.get("json");
-                            presenter.catchNewData(json);
+
+                            ArrayList<AnimalObject> dataArray = gson.fromJson(json,new TypeToken<List<AnimalObject>>(){}.getType());
+                            if (dataArray != null && dataArray.size() != 0){
+                                presenter.catchNewData(dataArray);
+                            }
                         }
                     }
                 });
@@ -150,10 +160,15 @@ public class AnimalFragment extends Fragment implements AnimalVu {
                     @Override
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful() && task.getResult() != null){
-
                             DocumentSnapshot snapshot = task.getResult();
                             String json = (String) snapshot.get("json");
-                            presenter.catchData(json);
+
+                            ArrayList<AnimalObject> dataArray = gson.fromJson(json,new TypeToken<List<AnimalObject>>(){}.getType());
+                            if (dataArray != null && dataArray.size() != 0){
+                                presenter.catchData(dataArray);
+                            }
+
+
                         }
                     }
                 });

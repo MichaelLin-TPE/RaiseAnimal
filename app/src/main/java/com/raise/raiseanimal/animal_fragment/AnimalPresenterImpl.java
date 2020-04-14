@@ -2,6 +2,8 @@ package com.raise.raiseanimal.animal_fragment;
 
 import android.util.Log;
 
+import androidx.annotation.VisibleForTesting;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.raise.raiseanimal.connect.HttpConnection;
@@ -20,10 +22,24 @@ public class AnimalPresenterImpl implements AnimalPresenter{
 
     private boolean isDataChange = true;
 
+    private ArrayList<AnimalObject> catchArray;
+
+    private ArrayList<AnimalObject> dataArray;
+
 
     public AnimalPresenterImpl(AnimalVu mView) {
         this.mView = mView;
         gson = new Gson();
+    }
+
+    @VisibleForTesting
+    public void setOnCatchArray (ArrayList<AnimalObject> catchArray){
+        this.catchArray = catchArray;
+    }
+
+    @VisibleForTesting
+    public void setDataArray (ArrayList<AnimalObject> dataArray){
+        this.dataArray = dataArray;
     }
 
     @Override
@@ -35,10 +51,10 @@ public class AnimalPresenterImpl implements AnimalPresenter{
             @Override
             public void onSuccess(String result) {
                 Log.i("Michael","success : "+result);
-                final ArrayList<AnimalObject> catchArray = gson.fromJson(result,new TypeToken<List<AnimalObject>>(){}.getType());
+                catchArray = gson.fromJson(result,new TypeToken<List<AnimalObject>>(){}.getType());
                 if (catchArray != null && catchArray.size() != 0){
                     Log.i("Michael","地址 : "+catchArray.get(0).getShelterAddress());
-                    final ArrayList<AnimalObject> dataArray = new ArrayList<>();
+                    dataArray = new ArrayList<>();
                     for (AnimalObject object : catchArray){
                         if (object.getShleterName().equals(mView.getPlaceString()) && object.getAnimalKind().equals(mView.getDogStr())){
                             dataArray.add(object);
@@ -83,13 +99,14 @@ public class AnimalPresenterImpl implements AnimalPresenter{
         });
     }
 
+
     @Override
-    public void catchData(String json) {
-        if (json != null){
+    public void catchData(ArrayList<AnimalObject> dataArray) {
+        if (dataArray != null){
+            this.catchFirebaseArray = dataArray;
             Log.i("Michael","json != null");
-            catchFirebaseArray = gson.fromJson(json,new TypeToken<List<AnimalObject>>(){}.getType());
             mView.showProgress(false);
-            mView.setRecyclerView(catchFirebaseArray);
+            mView.setRecyclerView(dataArray);
             startToCatchData();
         }else {
             Log.i("Michael","json == null");
@@ -103,16 +120,18 @@ public class AnimalPresenterImpl implements AnimalPresenter{
     }
 
     @Override
-    public void catchNewData(String json) {
-        if (json != null){
-            catchFirebaseArray = gson.fromJson(json,new TypeToken<List<AnimalObject>>(){}.getType());
+    public void catchNewData(ArrayList<AnimalObject> dataArray) {
+        if (dataArray != null){
+            this.catchFirebaseArray = dataArray;
             mView.showProgress(false);
-            mView.setRecyclerView(catchFirebaseArray);
+            mView.setRecyclerView(dataArray);
         }
     }
 
     @Override
     public void onAnimalItemClickListener(AnimalObject data) {
-        mView.intentToDetailPage(data);
+        if (data != null){
+            mView.intentToDetailPage(data);
+        }
     }
 }

@@ -2,6 +2,8 @@ package com.raise.raiseanimal;
 
 import android.util.Log;
 
+import androidx.annotation.VisibleForTesting;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.raise.raiseanimal.connect.gson_object.AnimalObject;
@@ -14,22 +16,26 @@ public class MainActivityPresenterImpl implements MainActivityPresenter {
 
     private MainActivityVu mView;
 
-    private Gson gson;
+    private ArrayList<String> imageUrlArray;
+
 
     public MainActivityPresenterImpl(MainActivityVu mView) {
         this.mView = mView;
-        gson = new Gson();
     }
 
+    @VisibleForTesting
+    public void setImageArray(ArrayList<String> imageArray){
+        this.imageUrlArray = imageArray;
+    }
+
+
     @Override
-    public void onCatchData(String json) {
+    public void onCatchData(ArrayList<AnimalObject> dataArray) {
 
-        if (json != null){
-
-            ArrayList<AnimalObject> dataArray = gson.fromJson(json,new TypeToken<List<AnimalObject>>(){}.getType());
+        if (dataArray != null){
 
             if (dataArray.size() != 0){
-                ArrayList<String> imageUrlArray = new ArrayList<>();
+                imageUrlArray = new ArrayList<>();
                 Collections.shuffle(dataArray);
                 int index = 0;
                 for (AnimalObject data : dataArray){

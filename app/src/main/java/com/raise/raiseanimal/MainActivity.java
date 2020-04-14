@@ -21,12 +21,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.raise.raiseanimal.connect.gson_object.AnimalObject;
 import com.raise.raiseanimal.detail_activity.DetailAdapter;
 import com.raise.raiseanimal.home_activity.HomeActivity;
 import com.raise.raiseanimal.tool.UserDataManager;
 
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements MainActivityVu {
 
@@ -48,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements MainActivityVu {
     public ImageView[] pointers;
 
     private AlertDialog dialog;
+
+    private Gson gson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +77,11 @@ public class MainActivity extends AppCompatActivity implements MainActivityVu {
                     public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                         if (task.isSuccessful() && task.getResult() != null) {
                             DocumentSnapshot snapshot = task.getResult();
-                            presenter.onCatchData((String) snapshot.get("json"));
+
+                            ArrayList<AnimalObject> dataArray = gson.fromJson((String)snapshot.get("json"),new TypeToken<List<AnimalObject>>(){}.getType());
+                            if (dataArray != null && dataArray.size() != 0){
+                                presenter.onCatchData(dataArray);
+                            }
                         }
                     }
                 });
@@ -103,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements MainActivityVu {
     private void initPresenter() {
         presenter = new MainActivityPresenterImpl(this);
         firestore = FirebaseFirestore.getInstance();
+        gson = new Gson();
     }
 
     @Override
