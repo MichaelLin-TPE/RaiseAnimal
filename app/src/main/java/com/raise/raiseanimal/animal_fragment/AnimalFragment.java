@@ -258,6 +258,7 @@ public class AnimalFragment extends Fragment implements AnimalVu {
         Intent it = new Intent(context, DetailActivity.class);
         it.putExtra("data",data);
         context.startActivity(it);
+        //dk dk
     }
 
     @Override
