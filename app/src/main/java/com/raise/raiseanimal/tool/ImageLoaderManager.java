@@ -2,12 +2,15 @@ package com.raise.raiseanimal.tool;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 import com.raise.raiseanimal.R;
 
 public class ImageLoaderManager {
@@ -48,5 +51,32 @@ public class ImageLoaderManager {
 
     public void setPhotoUrl(String url, ImageView ivImage){
         imageLoader.displayImage(url,ivImage,options);
+    }
+
+    public void getBitmap(String url, final OnBitmapListener listener) {
+        imageLoader.loadImage(url, new ImageLoadingListener() {
+            @Override
+            public void onLoadingStarted(String imageUri, View view) {
+
+            }
+
+            @Override
+            public void onLoadingFailed(String imageUri, View view, FailReason failReason) {
+
+            }
+
+            @Override
+            public void onLoadingComplete(String imageUri, View view, Bitmap loadedImage) {
+                listener.onSuccessful(loadedImage);
+            }
+
+            @Override
+            public void onLoadingCancelled(String imageUri, View view) {
+
+            }
+        });
+    }
+    public interface OnBitmapListener{
+        void onSuccessful(Bitmap bitmap);
     }
 }

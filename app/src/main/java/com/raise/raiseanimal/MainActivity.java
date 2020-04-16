@@ -87,25 +87,19 @@ public class MainActivity extends AppCompatActivity implements MainActivityVu {
     }
 
     private void initView() {
-        Button button = findViewById(R.id.main_button);
+        ImageView button = findViewById(R.id.main_button);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(MainActivity.this, HomeActivity.class);
                 startActivity(it);
+                finish();
             }
         });
         pointer = findViewById(R.id.main_pointer);
 
         viewPager = findViewById(R.id.main_view_pager);
 
-        TextView tvInfo = findViewById(R.id.main_information);
-        tvInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onInfoBtnClickListener();
-            }
-        });
 
     }
 

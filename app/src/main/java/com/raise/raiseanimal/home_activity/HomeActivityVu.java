@@ -10,4 +10,6 @@ public interface HomeActivityVu {
     void changeTabUnselectedIcon(int position, ArrayList<Integer> notPressedIconArray);
 
     void setViewPager();
+
+    void sendMailToMe();
 }

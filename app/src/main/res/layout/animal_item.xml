@@ -23,17 +23,28 @@
         app:layout_constraintTop_toBottomOf="@id/animal_item_photo"
         app:layout_constraintLeft_toLeftOf="@id/animal_item_photo"
         app:layout_constraintRight_toRightOf="@id/animal_item_photo"
+        android:layout_marginEnd="15dp"
         android:gravity="center"
         android:lines="1"
         android:maxLines="1"
-        android:ellipsize="end"
         android:textStyle="bold"
         tools:text="小黑"
         android:textSize="@dimen/normal_text_size"
         android:textColor="@color/black"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_height="wrap_content"/>
+
+    <ImageView
+        android:id="@+id/animal_item_heart"
+        android:contentDescription="@null"
+        app:layout_constraintTop_toTopOf="@id/animal_item_name"
+        app:layout_constraintBottom_toBottomOf="@id/animal_item_name"
+        app:layout_constraintLeft_toRightOf="@id/animal_item_name"
+        android:src="@drawable/heart_not_pressed"
+        android:layout_marginStart="5dp"
+        android:layout_width="@dimen/small_icon_size"
+        android:layout_height="@dimen/small_icon_size"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

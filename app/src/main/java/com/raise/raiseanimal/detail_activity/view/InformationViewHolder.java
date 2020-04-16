@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.raise.raiseanimal.R;
+import com.raise.raiseanimal.animal_fragment.AnimalFavorite;
 import com.raise.raiseanimal.connect.gson_object.AnimalObject;
 
 import java.util.Locale;
@@ -52,5 +53,31 @@ public class InformationViewHolder extends RecyclerView.ViewHolder {
         tvStory.setText(String.format(Locale.getDefault(),"%s","志工尚未提供"));
 
 
+    }
+
+    public void setNewData(AnimalFavorite newData) {
+        tvNumber.setText(String.format(Locale.getDefault(),"編號 : %d",newData.getNumber()));
+        if (newData.getName().isEmpty()){
+            tvName.setText(String.format(Locale.getDefault(),"名字 : %s","尚未提供"));
+        }else {
+            tvName.setText(String.format(Locale.getDefault(),"名字 : %s",newData.getName()));
+        }
+        if (newData.isNoSex()){
+            tvNoSex.setText(String.format(Locale.getDefault(),"是否已結育 : %s","是"));
+        }else {
+            tvNoSex.setText(String.format(Locale.getDefault(),"是否已結育 : %s","否"));
+        }
+        tvLocation.setText(String.format(Locale.getDefault(),"目前位置 : %s",newData.getLocation()));
+
+        tvWhy.setText(String.format(Locale.getDefault(),"尋獲地 : %s",newData.getFoundPlace()));
+
+        if (newData.getSex().equals("F")){
+            tvSex.setText(String.format(Locale.getDefault(),"性別 : %s","母"));
+        }else {
+            tvSex.setText(String.format(Locale.getDefault(),"性別 : %s","公"));
+        }
+
+
+        tvStory.setText(String.format(Locale.getDefault(),"%s","志工尚未提供"));
     }
 }

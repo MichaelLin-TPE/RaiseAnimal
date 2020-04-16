@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -37,6 +38,7 @@ import com.raise.raiseanimal.animal_fragment.filter.FilterPresenter;
 import com.raise.raiseanimal.animal_fragment.filter.FilterPresenterImpl;
 import com.raise.raiseanimal.connect.gson_object.AnimalObject;
 import com.raise.raiseanimal.detail_activity.DetailActivity;
+import com.raise.raiseanimal.tool.UserDataManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -58,9 +60,9 @@ public class AnimalFragment extends Fragment implements AnimalVu {
 
     private Gson gson;
 
-    private TextView tvSearchInfo;
+    private TextView tvSearchInfo,tvOpenFilter;
 
-    private ImageView ivLogo;
+    private ImageView ivLogo,ivOpenFilter;
 
     private FilterPresenter filterPresenter;
 
@@ -68,6 +70,8 @@ public class AnimalFragment extends Fragment implements AnimalVu {
     private static final String DATA = "data";
 
     private FirebaseFirestore firestore;
+
+    private boolean isOpenFilter;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -93,13 +97,22 @@ public class AnimalFragment extends Fragment implements AnimalVu {
 
     private void initView(View view) {
         recyclerView = view.findViewById(R.id.animal_recycler_view);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(context,3);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(context,2);
         recyclerView.setLayoutManager(gridLayoutManager);
         progressBar = view.findViewById(R.id.animal_progress);
         rvFilter = view.findViewById(R.id.animal_filter_recycler_view);
         rvFilter.setLayoutManager(new LinearLayoutManager(context));
         tvSearchInfo = view.findViewById(R.id.animal_search_info);
         ivLogo = view.findViewById(R.id.animal_icon);
+        tvOpenFilter = view.findViewById(R.id.animal_filter_info);
+        ivOpenFilter = view.findViewById(R.id.animal_filter_icon);
+
+        tvOpenFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onOpenFilterClickListener(isOpenFilter);
+            }
+        });
     }
 
     @Override
@@ -208,11 +221,14 @@ public class AnimalFragment extends Fragment implements AnimalVu {
 
         if (animalAdapter != null){
             animalAdapter.setData(dataArray);
+            ArrayList<AnimalFavorite> favArray = gson.fromJson(UserDataManager.getInstance(context).getFavorite(),new TypeToken<List<AnimalFavorite>>(){}.getType());
+            animalAdapter.setFavoriteData(favArray);
             animalAdapter.notifyDataSetChanged();
         }
 
         animalAdapter = new AnimalAdapter(context);
-
+        ArrayList<AnimalFavorite> favArray = gson.fromJson(UserDataManager.getInstance(context).getFavorite(),new TypeToken<List<AnimalFavorite>>(){}.getType());
+        animalAdapter.setFavoriteData(favArray);
         animalAdapter.setData(dataArray);
 
         recyclerView.setAdapter(animalAdapter);
@@ -221,6 +237,11 @@ public class AnimalFragment extends Fragment implements AnimalVu {
             @Override
             public void onClick(AnimalObject data) {
                 presenter.onAnimalItemClickListener(data);
+            }
+
+            @Override
+            public void onFavorite(AnimalObject data) {
+                presenter.onFavoriteIconClickListener(data);
             }
         });
     }
@@ -284,7 +305,86 @@ public class AnimalFragment extends Fragment implements AnimalVu {
 
     @Override
     public void showSearchNoData(boolean isShow) {
+
         tvSearchInfo.setVisibility(isShow ? View.VISIBLE : View.GONE);
         ivLogo.setVisibility(isShow ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public void openFilterView(boolean isShow) {
+        if (isShow){
+            isOpenFilter = true;
+        }else {
+            isOpenFilter = false;
+        }
+
+
+        rvFilter.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        tvOpenFilter.setText(isShow ? context.getString(R.string.close_filter) : context.getString(R.string.open_filter));
+        ivOpenFilter.setImageResource(isShow ? R.drawable.up_arrow : R.drawable.down_arrow);
+    }
+
+    @Override
+    public void saveUserFavoriteData(AnimalObject data) {
+        Log.i("Michael","animal Id : "+data.getAnimalId());
+        ArrayList<AnimalFavorite> favArray = gson.fromJson(UserDataManager.getInstance(context).getFavorite(),new TypeToken<List<AnimalFavorite>>(){}.getType());
+
+        if (favArray == null){
+            favArray = new ArrayList<>();
+            AnimalFavorite fav = new AnimalFavorite();
+            fav.setColor(data.getAnimalColour());
+            fav.setName(data.getAnimalTitle());
+            fav.setNoSex(data.getAnimalSterilization().equals("T"));
+            fav.setNumber(data.getAnimalId());
+            fav.setPhoto(data.getAlbumFile());
+            fav.setSize(data.getAnimalBodyType());
+            fav.setLocation(data.getShleterName());
+            fav.setFoundPlace(data.getAnimalFoundPlace());
+            fav.setStory("");
+            fav.setSex(data.getAnimalSex());
+            fav.setFavorite(true);
+            favArray.add(fav);
+            String favJson = gson.toJson(favArray);
+            Log.i("Michael","即將儲存的json : "+favJson);
+            UserDataManager.getInstance(context).saveFavorite(favJson);
+            animalAdapter.setFavoriteData(favArray);
+            animalAdapter.notifyDataSetChanged();
+        }else {
+            boolean isRepeat = false;
+            int index = 0;
+            for (AnimalFavorite favorite : favArray){
+                if (data.getAnimalId() == favorite.getNumber()){
+                    isRepeat = true;
+                    break;
+                }
+                index ++;
+            }
+            if (isRepeat){
+                favArray.remove(index);
+                String favJson = gson.toJson(favArray);
+                UserDataManager.getInstance(context).saveFavorite(favJson);
+                animalAdapter.setFavoriteData(favArray);
+                animalAdapter.notifyDataSetChanged();
+                return;
+            }
+            AnimalFavorite fav = new AnimalFavorite();
+            fav.setColor(data.getAnimalColour());
+            fav.setName(data.getAnimalTitle());
+            fav.setNoSex(data.getAnimalSterilization().equals("T"));
+            fav.setNumber(data.getAnimalId());
+            fav.setPhoto(data.getAlbumFile());
+            fav.setSize(data.getAnimalBodyType());
+            fav.setLocation(data.getShleterName());
+            fav.setFoundPlace(data.getAnimalFoundPlace());
+            fav.setStory("");
+            fav.setSex(data.getAnimalSex());
+            favArray.add(fav);
+            String favJson = gson.toJson(favArray);
+            Log.i("Michael","即將儲存的json : "+favJson);
+            UserDataManager.getInstance(context).saveFavorite(favJson);
+            animalAdapter.setFavoriteData(favArray);
+            animalAdapter.notifyDataSetChanged();
+        }
+
     }
 }

@@ -1,15 +1,12 @@
 package com.raise.raiseanimal.home_activity;
 
-import android.view.View;
-
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentStatePagerAdapter;
-import androidx.viewpager.widget.PagerAdapter;
 
 import com.raise.raiseanimal.animal_fragment.AnimalFragment;
-import com.raise.raiseanimal.personal_fragment.PersonalFragment;
+import com.raise.raiseanimal.favorite_fragment.FavoriteFragment;
 import com.raise.raiseanimal.staff_fragment.StaffFragment;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -25,9 +22,9 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         if (position == 0){
             return AnimalFragment.newInstance();
         }else if (position == 1){
-            return PersonalFragment.newInstance();
-        }else {
             return StaffFragment.newInstance();
+        }else {
+            return FavoriteFragment.newInstance();
         }
     }
 

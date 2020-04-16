@@ -20,4 +20,8 @@ public interface AnimalVu {
     void showFilterView(ArrayList<String> colorArray, ArrayList<String> noSexArray, ArrayList<String> sexArray, ArrayList<String> sizeArray);
 
     void showSearchNoData(boolean isShow);
+
+    void openFilterView(boolean isShow);
+
+    void saveUserFavoriteData(AnimalObject data);
 }

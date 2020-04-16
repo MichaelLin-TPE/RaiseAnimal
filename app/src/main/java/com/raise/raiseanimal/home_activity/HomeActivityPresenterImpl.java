@@ -26,4 +26,9 @@ public class HomeActivityPresenterImpl implements HomeActivityPresenter {
     public void onTabUnselectedListener(int position, ArrayList<Integer> notPressedIconArray) {
         mView.changeTabUnselectedIcon(position,notPressedIconArray);
     }
+
+    @Override
+    public void onMainButtonClickListener() {
+        mView.sendMailToMe();
+    }
 }

@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.raise.raiseanimal.R;
+import com.raise.raiseanimal.animal_fragment.AnimalFavorite;
 import com.raise.raiseanimal.connect.gson_object.AnimalObject;
 import com.raise.raiseanimal.detail_activity.TagViewAdapter;
 
@@ -39,6 +40,27 @@ public class TagViewHolder extends RecyclerView.ViewHolder {
         if (data.getAnimalBodyType().equals("MEDIUM")){
             tagArray.add("中型");
         }else if (data.getAnimalBodyType().equals("SMALL")){
+            tagArray.add("小型");
+        }else {
+            tagArray.add("大型");
+        }
+
+        TagViewAdapter adapter = new TagViewAdapter(tagArray,context);
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void setNewData(AnimalFavorite newData) {
+        ArrayList<String> tagArray = new ArrayList<>();
+        if (newData.getSex().equals("F")){
+            tagArray.add("母");
+        }else {
+            tagArray.add("公");
+        }
+        tagArray.add(newData.getColor());
+        tagArray.add("狗");
+        if (newData.getSize().equals("MEDIUM")){
+            tagArray.add("中型");
+        }else if (newData.getSize().equals("SMALL")){
             tagArray.add("小型");
         }else {
             tagArray.add("大型");

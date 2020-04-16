@@ -357,4 +357,20 @@ public class AnimalPresenterImpl implements AnimalPresenter {
             }
         }
     }
+
+    @Override
+    public void onOpenFilterClickListener(boolean isOpenFilter) {
+        Log.i("Michael","isOpenFilter : "+isOpenFilter);
+        if (!isOpenFilter){
+            mView.openFilterView(true);
+        }else {
+            mView.openFilterView(false);
+        }
+
+    }
+
+    @Override
+    public void onFavoriteIconClickListener(AnimalObject data) {
+        mView.saveUserFavoriteData(data);
+    }
 }

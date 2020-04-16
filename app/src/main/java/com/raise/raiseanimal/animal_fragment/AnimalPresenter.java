@@ -16,4 +16,8 @@ public interface AnimalPresenter {
     void onAnimalItemClickListener(AnimalObject data);
 
     void onFilterItemClickListener(String name, String value);
+
+    void onOpenFilterClickListener(boolean isOpenFilter);
+
+    void onFavoriteIconClickListener(AnimalObject data);
 }

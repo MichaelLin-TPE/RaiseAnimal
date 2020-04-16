@@ -1,11 +1,16 @@
 package com.raise.raiseanimal.home_activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.FragmentManager;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -26,6 +31,25 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
     private ImageView ivIcon;
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main_menu,menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.main_mail){
+            presenter.onMainButtonClickListener();
+        }
+
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
@@ -34,8 +58,9 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
 
         ArrayList<String> tabArray = new ArrayList<>();
         tabArray.add(getString(R.string.animal));
-        tabArray.add(getString(R.string.personal));
         tabArray.add(getString(R.string.staff));
+        tabArray.add(getString(R.string.favorite));
+
 
         presenter.onCatchTabData(tabArray);
 
@@ -59,13 +84,15 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
         //未點擊的icon
         final ArrayList<Integer> notPressedIconArray = new ArrayList<>();
         notPressedIconArray.add(R.drawable.pets_not_pressed);
-        notPressedIconArray.add(R.drawable.user_not_pressed);
         notPressedIconArray.add(R.drawable.staff_not_pressed);
+        notPressedIconArray.add(R.drawable.heart_not_pressed);
+
         //點擊的icon
         final ArrayList<Integer> pressedIconArray = new ArrayList<>();
         pressedIconArray.add(R.drawable.pets_pressed);
-        pressedIconArray.add(R.drawable.user_pressed);
         pressedIconArray.add(R.drawable.staff_pressed);
+        pressedIconArray.add(R.drawable.heart_pressed);
+
 
 
         tabLayout.removeAllTabs();
@@ -129,6 +156,22 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
         FragmentManager manager = getSupportFragmentManager();
         ViewPagerAdapter adapter = new ViewPagerAdapter(manager);
         viewPager.setAdapter(adapter);
+    }
+
+    @Override
+    public void sendMailToMe() {
+        try {
+            String emailBody = getString(R.string.email_body);
+            Intent emailIntent = new Intent(Intent.ACTION_SEND);
+            emailIntent.setData(Uri.parse("mailto:"));
+            emailIntent.setType("message/rfc822");
+            emailIntent.putExtra(Intent.EXTRA_EMAIL,new String[]{"raiseanimalvolunteers@gmail.com"});
+            emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.question_report));
+            emailIntent.putExtra(Intent.EXTRA_TEXT, emailBody);
+            startActivity(emailIntent);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private View prepareView(String title, Integer icon) {

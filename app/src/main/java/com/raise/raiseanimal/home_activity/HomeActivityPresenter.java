@@ -8,4 +8,6 @@ public interface HomeActivityPresenter {
     void onTabSelectedListener(int position, ArrayList<Integer> pressedIconArray);
 
     void onTabUnselectedListener(int position, ArrayList<Integer> notPressedIconArray);
+
+    void onMainButtonClickListener();
 }

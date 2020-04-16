@@ -19,7 +19,6 @@
             android:textColor="@color/black"
             android:gravity="center"
             android:textSize="@dimen/title_size"
-            android:text="@string/home_of_animal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
@@ -28,13 +27,18 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/main_view_pager"
-        app:layout_constraintTop_toBottomOf="@id/main_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/view_pager_height"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="120dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginEnd="25dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="120dp"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/view_pager_height"/>
+        app:layout_constraintTop_toBottomOf="@id/main_toolbar"
+        app:layout_constraintVertical_bias="0.501" />
 
     <LinearLayout
         android:id="@+id/main_pointer"
@@ -44,31 +48,19 @@
         android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <TextView
-        android:id="@+id/main_information"
-        app:layout_constraintTop_toBottomOf="@id/main_view_pager"
-        android:layout_marginTop="25dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:textSize="@dimen/information_size"
-        android:textColor="@color/blue"
-        android:text="@string/information"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
-    <Button
-        app:layout_constraintTop_toBottomOf="@id/main_information"
-        android:layout_marginTop="25dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginEnd="25dp"
-        android:layout_marginStart="25dp"
+
+    <ImageView
+        app:layout_constraintBottom_toTopOf="@id/main_view_pager"
+        android:layout_marginBottom="15dp"
+        android:contentDescription="@null"
+        android:background="@drawable/ripple_shape"
+        android:src="@drawable/take_me_home"
+        android:scaleType="fitXY"
+        app:layout_constraintRight_toRightOf="@id/main_view_pager"
         android:id="@+id/main_button"
-        android:background="@drawable/button_shape"
-        android:textSize="@dimen/information_size"
-        android:text="@string/go_select"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"/>
+        android:layout_width="@dimen/take_me_width"
+        android:layout_height="@dimen/take_me_height"/>
 
 
 

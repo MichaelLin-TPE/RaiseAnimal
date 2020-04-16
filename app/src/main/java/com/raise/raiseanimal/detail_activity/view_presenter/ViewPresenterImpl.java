@@ -1,5 +1,6 @@
 package com.raise.raiseanimal.detail_activity.view_presenter;
 
+import com.raise.raiseanimal.animal_fragment.AnimalFavorite;
 import com.raise.raiseanimal.connect.gson_object.AnimalObject;
 import com.raise.raiseanimal.detail_activity.view.InformationViewHolder;
 import com.raise.raiseanimal.detail_activity.view.PhotoViewHolder;
@@ -15,10 +16,13 @@ public class ViewPresenterImpl implements ViewPresenter {
 
     private AnimalObject data;
 
+    private AnimalFavorite newData;
+
 
     @Override
-    public void setData(AnimalObject data) {
+    public void setData(AnimalObject data, AnimalFavorite newData) {
         this.data = data;
+        this.newData = newData;
     }
 
     @Override
@@ -42,16 +46,30 @@ public class ViewPresenterImpl implements ViewPresenter {
 
     @Override
     public void onBindPhotoViewHolder(PhotoViewHolder holder, int position) {
-        holder.setData(data.getAlbumFile());
+        if (data != null){
+            holder.setData(data.getAlbumFile());
+        }else {
+            holder.setData(newData.getPhoto());
+        }
+
     }
 
     @Override
     public void onBindInformationViewHolder(InformationViewHolder holder, int position) {
-        holder.setData(data);
+        if (data != null){
+            holder.setData(data);
+        }else {
+            holder.setNewData(newData);
+        }
+
     }
 
     @Override
     public void onBindTagViewHolder(TagViewHolder holder, int position) {
-        holder.setData(data);
+        if (data != null){
+            holder.setData(data);
+        }else {
+            holder.setNewData(newData);
+        }
     }
 }

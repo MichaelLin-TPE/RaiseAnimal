@@ -28,4 +28,13 @@ public class UserDataManager {
     public boolean isShow(){
         return sp.getBoolean("isShow",true);
     }
+
+    public void saveFavorite(String favoriteJson){
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("favorite",favoriteJson);
+        editor.apply();
+    }
+    public String getFavorite(){
+        return sp.getString("favorite","");
+    }
 }

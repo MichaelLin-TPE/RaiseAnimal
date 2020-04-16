@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -26,6 +27,8 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
     private OnAnimalItemClickListener listener;
 
+    private ArrayList<AnimalFavorite> favArray;
+
     public void setOnAnimalItemClickListener(OnAnimalItemClickListener listener){
         this.listener = listener;
     }
@@ -43,6 +46,18 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final AnimalObject data = dataArray.get(position);
+
+        //設定是否有最愛
+        if (favArray != null && favArray.size() != 0){
+            for (AnimalFavorite fav : favArray){
+                if (fav.getNumber() == data.getAnimalId()){
+                    holder.ivFavorite.setImageResource(R.drawable.heart_pressed);
+                    break;
+                }else {
+                    holder.ivFavorite.setImageResource(R.drawable.heart_not_pressed);
+                }
+            }
+        }
         if (data.getAlbumFile() == null || data.getAlbumFile().isEmpty()){
             holder.ivPhoto.setBackground(ContextCompat.getDrawable(context,R.drawable.story_shape));
         }else {
@@ -50,17 +65,23 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
             ImageLoaderManager.getInstance(context).setPhotoUrl(data.getAlbumFile(),holder.ivPhoto);
         }
 
-
         if (data.getAnimalTitle().isEmpty()){
             holder.tvTitle.setText("未命名");
         }else {
             holder.tvTitle.setText(data.getAnimalTitle());
         }
 
-        holder.clickArea.setOnClickListener(new View.OnClickListener() {
+        holder.ivPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 listener.onClick(data);
+            }
+        });
+
+        holder.ivFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onFavorite(data);
             }
         });
     }
@@ -74,6 +95,10 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         this.dataArray =dataArray;
     }
 
+    public void setFavoriteData(ArrayList<AnimalFavorite> favArray){
+        this.favArray = favArray;
+    }
+
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         private RoundedImageView ivPhoto;
@@ -82,15 +107,19 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
 
         private ConstraintLayout clickArea;
 
+        private ImageView ivFavorite;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             ivPhoto = itemView.findViewById(R.id.animal_item_photo);
             tvTitle= itemView.findViewById(R.id.animal_item_name);
             clickArea = itemView.findViewById(R.id.animal_item_click_area);
+            ivFavorite = itemView.findViewById(R.id.animal_item_heart);
         }
     }
 
     public interface OnAnimalItemClickListener{
         void onClick(AnimalObject data);
+        void onFavorite(AnimalObject data);
     }
 }
