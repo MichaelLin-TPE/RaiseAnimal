@@ -1,5 +1,8 @@
 package com.raise.raiseanimal.animal_fragment;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.media.Image;
@@ -8,6 +11,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.view.ViewCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
@@ -72,6 +77,9 @@ public class AnimalFragment extends Fragment implements AnimalVu {
     private FirebaseFirestore firestore;
 
     private boolean isOpenFilter;
+
+    //測試
+    private int mHeight;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -295,6 +303,16 @@ public class AnimalFragment extends Fragment implements AnimalVu {
         filterPresenter.setSizeData(sizeArray);
         FilterAdapter adapter = new FilterAdapter(filterPresenter,context);
         rvFilter.setAdapter(adapter);
+
+        //測試動畫
+        rvFilter.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                rvFilter.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                mHeight = rvFilter.getHeight();
+                rvFilter.setPadding(0,-mHeight,0,0);
+            }
+        });
         adapter.setOnFilterItemClickListener(new FilterItemAdapter.OnFilterItemClickListener() {
             @Override
             public void onClick(String name,String value) {
@@ -318,10 +336,41 @@ public class AnimalFragment extends Fragment implements AnimalVu {
             isOpenFilter = false;
         }
 
+        ValueAnimator valueAnimator = new ValueAnimator();
+        if (isShow){
+            valueAnimator.setIntValues(-mHeight,0);
+        }else {
+            valueAnimator.setIntValues(0,-mHeight);
+        }
+        valueAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                int value = (int)animation.getAnimatedValue();
+                rvFilter.setPadding(0,value,0,0);
+            }
+        });
+        valueAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationCancel(Animator animation) {
 
-        rvFilter.setVisibility(isShow ? View.VISIBLE : View.GONE);
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                tvOpenFilter.setClickable(true);
+            }
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+                tvOpenFilter.setClickable(false);
+            }
+        });
+        valueAnimator.setDuration(500);
+        valueAnimator.start();
+        ViewCompat.animate(ivOpenFilter).rotationBy(180f).setDuration(500).start();
+//        rvFilter.setVisibility(isShow ? View.VISIBLE : View.GONE);
         tvOpenFilter.setText(isShow ? context.getString(R.string.close_filter) : context.getString(R.string.open_filter));
-        ivOpenFilter.setImageResource(isShow ? R.drawable.up_arrow : R.drawable.down_arrow);
+//        ivOpenFilter.setImageResource(isShow ? R.drawable.up_arrow : R.drawable.down_arrow);
     }
 
     @Override

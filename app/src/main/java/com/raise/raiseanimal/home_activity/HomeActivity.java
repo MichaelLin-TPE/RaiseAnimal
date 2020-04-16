@@ -44,8 +44,6 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
         if (item.getItemId() == R.id.main_mail){
             presenter.onMainButtonClickListener();
         }
-
-
         return super.onOptionsItemSelected(item);
     }
 

@@ -14,7 +14,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:src="@drawable/no_pic"
         app:riv_corner_radius="5dip"
-        android:scaleType="fitXY"
+        android:scaleType="centerCrop"
         android:layout_width="@dimen/animal_photo_width"
         android:layout_height="@dimen/animal_photo_height"/>
 
