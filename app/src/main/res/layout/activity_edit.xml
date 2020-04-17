@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".edit_activity.EditActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/edit_toolbar"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/staff_edit"
+        app:navigationIcon="@drawable/back"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <View
+        android:id="@+id/edit_line"
+        android:background="@color/grey"
+        app:layout_constraintTop_toBottomOf="@id/edit_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <TextView
+        android:id="@+id/edit_info"
+        android:textStyle="bold"
+        tools:text="目前編輯狗狗的編號為 : XXXXX"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/edit_line"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
+    <Button
+        android:id="@+id/edit_btn_name"
+        android:text="@string/edit_name"
+        android:background="@drawable/button_selector"
+        app:layout_constraintTop_toBottomOf="@id/edit_info"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginTop="20dp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/edit_btn_height"/>
+
+    <TextView
+        android:id="@+id/edit_name"
+        tools:text="更改後的姓名為 : 小黃"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/edit_btn_name"
+        app:layout_constraintLeft_toLeftOf="@id/edit_btn_name"
+        app:layout_constraintRight_toRightOf="@id/edit_btn_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/edit_btn_photo"
+        android:text="@string/edit_photo"
+        android:background="@drawable/button_selector"
+        app:layout_constraintTop_toBottomOf="@id/edit_name"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/edit_btn_height"/>
+
+    <ImageView
+        android:id="@+id/edit_photo"
+        android:src="@drawable/foot_icon"
+        android:contentDescription="@null"
+        android:layout_marginTop="10dp"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/edit_btn_photo"
+        app:layout_constraintLeft_toLeftOf="@id/edit_btn_photo"
+        app:layout_constraintRight_toRightOf="@id/edit_btn_photo"
+        android:layout_width="@dimen/edit_photo"
+        android:layout_height="@dimen/edit_photo_height"/>
+
+    <Button
+        android:id="@+id/edit_btn_personality"
+        android:text="@string/edit_personality"
+        android:background="@drawable/button_selector"
+        app:layout_constraintTop_toBottomOf="@id/edit_photo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/edit_btn_height"/>
+
+    <TextView
+        android:id="@+id/edit_personality"
+        tools:text="更改後的個性TAG為 : 會滾掃,暴衝"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/edit_btn_personality"
+        app:layout_constraintLeft_toLeftOf="@id/edit_btn_personality"
+        app:layout_constraintRight_toRightOf="@id/edit_btn_personality"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/edit_btn_story"
+        android:text="@string/edit_story"
+        android:background="@drawable/button_selector"
+        app:layout_constraintTop_toBottomOf="@id/edit_personality"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/edit_btn_height"/>
+
+    <TextView
+        android:id="@+id/edit_story"
+        tools:text="故事 : XXXXXX"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@id/edit_btn_story"
+        app:layout_constraintLeft_toLeftOf="@id/edit_btn_story"
+        app:layout_constraintRight_toRightOf="@id/edit_btn_story"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/edit_btn_save"
+        android:text="@string/edit_save"
+        android:background="@drawable/button_selector"
+        app:layout_constraintTop_toBottomOf="@id/edit_story"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginStart="45dp"
+        android:layout_marginEnd="45dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/edit_btn_height"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

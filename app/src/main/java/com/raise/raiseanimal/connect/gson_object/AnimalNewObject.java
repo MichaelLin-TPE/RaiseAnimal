@@ -3,9 +3,8 @@ package com.raise.raiseanimal.connect.gson_object;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
-public class AnimalObject implements Serializable {
+public class AnimalNewObject implements Serializable {
     @SerializedName("animal_id")
     private int animalId;
     @SerializedName("animal_subid")
@@ -61,27 +60,6 @@ public class AnimalObject implements Serializable {
     @SerializedName("shelter_tel")
     private String shelterTel;
 
-    @SerializedName("story")
-    private String story;
-
-    @SerializedName("personality")
-    private ArrayList<String> personality;
-
-    public String getStory() {
-        return story;
-    }
-
-    public void setStory(String story) {
-        this.story = story;
-    }
-
-    public ArrayList<String> getPersonality() {
-        return personality;
-    }
-
-    public void setPersonality(ArrayList<String> personality) {
-        this.personality = personality;
-    }
 
     public String getAnimalUpdate() {
         return animalUpdate;

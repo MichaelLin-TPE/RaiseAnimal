@@ -49,8 +49,12 @@ public class InformationViewHolder extends RecyclerView.ViewHolder {
             tvSex.setText(String.format(Locale.getDefault(),"性別 : %s","公"));
         }
 
+        if (data.getStory().isEmpty() || data.getStory() == null){
+            tvStory.setText(String.format(Locale.getDefault(),"%s","志工尚未提供"));
+        }else {
+            tvStory.setText(String.format(Locale.getDefault(),"%s",data.getStory()));
+        }
 
-        tvStory.setText(String.format(Locale.getDefault(),"%s","志工尚未提供"));
 
 
     }
@@ -77,7 +81,11 @@ public class InformationViewHolder extends RecyclerView.ViewHolder {
             tvSex.setText(String.format(Locale.getDefault(),"性別 : %s","公"));
         }
 
+        if (newData.getStory().isEmpty() || newData.getStory() == null){
+            tvStory.setText(String.format(Locale.getDefault(),"%s","志工尚未提供"));
+        }else {
+            tvStory.setText(String.format(Locale.getDefault(),"%s",newData.getStory()));
+        }
 
-        tvStory.setText(String.format(Locale.getDefault(),"%s","志工尚未提供"));
     }
 }

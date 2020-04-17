@@ -7,6 +7,7 @@ import androidx.annotation.VisibleForTesting;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.raise.raiseanimal.connect.HttpConnection;
+import com.raise.raiseanimal.connect.gson_object.AnimalNewObject;
 import com.raise.raiseanimal.connect.gson_object.AnimalObject;
 
 import java.util.ArrayList;
@@ -22,9 +23,9 @@ public class AnimalPresenterImpl implements AnimalPresenter {
 
     private boolean isDataChange = true;
 
-    private ArrayList<AnimalObject> catchArray;
+    private ArrayList<AnimalNewObject> catchArray;
 
-    private ArrayList<AnimalObject> dataArray;
+    private ArrayList<AnimalNewObject> dataArray;
 
     private String sex, noSex, size, color;
 
@@ -47,12 +48,12 @@ public class AnimalPresenterImpl implements AnimalPresenter {
     }
 
     @VisibleForTesting
-    public void setOnCatchArray(ArrayList<AnimalObject> catchArray) {
+    public void setOnCatchArray(ArrayList<AnimalNewObject> catchArray) {
         this.catchArray = catchArray;
     }
 
     @VisibleForTesting
-    public void setDataArray(ArrayList<AnimalObject> dataArray) {
+    public void setDataArray(ArrayList<AnimalNewObject> dataArray) {
         this.dataArray = dataArray;
     }
 
@@ -65,12 +66,12 @@ public class AnimalPresenterImpl implements AnimalPresenter {
             @Override
             public void onSuccess(String result) {
                 Log.i("Michael", "success : " + result);
-                catchArray = gson.fromJson(result, new TypeToken<List<AnimalObject>>() {
+                catchArray = gson.fromJson(result, new TypeToken<List<AnimalNewObject>>() {
                 }.getType());
                 if (catchArray != null && catchArray.size() != 0) {
                     Log.i("Michael", "地址 : " + catchArray.get(0).getShelterAddress());
                     dataArray = new ArrayList<>();
-                    for (AnimalObject object : catchArray) {
+                    for (AnimalNewObject object : catchArray) {
                         if (object.getShleterName().equals(mView.getPlaceString()) && object.getAnimalKind().equals(mView.getDogStr())) {
                             dataArray.add(object);
                         }
@@ -91,7 +92,20 @@ public class AnimalPresenterImpl implements AnimalPresenter {
                                     }
                                     if (isDataChange) {
                                         Log.i("Michael", "狗狗資料新增");
-                                        catchFirebaseArray.add(dataArray.get(i));
+                                        AnimalObject object = new AnimalObject();
+                                        object.setAlbumFile(dataArray.get(i).getAlbumFile());
+                                        object.setShleterName(dataArray.get(i).getShleterName());
+                                        object.setAnimalBodyType(dataArray.get(i).getAnimalBodyType());
+                                        object.setAnimalSex(dataArray.get(i).getAnimalSex());
+                                        object.setAnimalSterilization(dataArray.get(i).getAnimalSterilization());
+                                        object.setAnimalFoundPlace(dataArray.get(i).getAnimalFoundPlace());
+                                        object.setAnimalTitle(dataArray.get(i).getAnimalTitle());
+                                        object.setAnimalColour(dataArray.get(i).getAnimalColour());
+                                        object.setAnimalId(dataArray.get(i).getAnimalId());
+                                        object.setAnimalKind(dataArray.get(i).getAnimalKind());
+                                        object.setStory("");
+                                        object.setPersonality(new ArrayList<String>());
+                                        catchFirebaseArray.add(object);
                                     }
                                 }
                                 String jsonStr = gson.toJson(catchFirebaseArray);
@@ -372,5 +386,45 @@ public class AnimalPresenterImpl implements AnimalPresenter {
     @Override
     public void onFavoriteIconClickListener(AnimalObject data) {
         mView.saveUserFavoriteData(data);
+    }
+
+    @Override
+    public void catchNoData() {
+        HttpConnection connection = new HttpConnection();
+        connection.execute("https://data.coa.gov.tw/Service/OpenData/TransService.aspx?UnitId=QcbUEzN6E6DL");
+        connection.setOnHttpConnectionListener(new HttpConnection.OnHttpConnectionListener() {
+            @Override
+            public void onSuccess(String result) {
+                catchFirebaseArray = new ArrayList<>();
+                ArrayList<AnimalNewObject> dataArray = gson.fromJson(result,new TypeToken<List<AnimalNewObject>>(){}.getType());
+                if (dataArray != null){
+                    for (AnimalNewObject data : dataArray){
+                        if (data.getShleterName().equals("新北市板橋區公立動物之家") && data.getAnimalKind().equals("狗")){
+                            AnimalObject object = new AnimalObject();
+                            object.setAlbumFile(data.getAlbumFile());
+                            object.setShleterName(data.getShleterName());
+                            object.setAnimalBodyType(data.getAnimalBodyType());
+                            object.setAnimalSex(data.getAnimalSex());
+                            object.setAnimalSterilization(data.getAnimalSterilization());
+                            object.setAnimalFoundPlace(data.getAnimalFoundPlace());
+                            object.setAnimalTitle(data.getAnimalTitle());
+                            object.setAnimalColour(data.getAnimalColour());
+                            object.setAnimalId(data.getAnimalId());
+                            object.setAnimalKind(data.getAnimalKind());
+                            object.setStory("");
+                            object.setPersonality(new ArrayList<String>());
+                            catchFirebaseArray.add(object);
+                        }
+                    }
+                    mView.saveJsonToFirebase(gson.toJson(catchFirebaseArray));
+                    mView.setRecyclerView(catchFirebaseArray);
+                }
+            }
+
+            @Override
+            public void onFailure(String errorCode) {
+                Log.i("Michael","錯誤 : "+errorCode);
+            }
+        });
     }
 }

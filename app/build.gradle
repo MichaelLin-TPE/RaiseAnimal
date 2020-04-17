@@ -20,6 +20,10 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
@@ -55,4 +59,11 @@ dependencies {
     testImplementation "junit:junit:4.12"
     testImplementation 'org.mockito:mockito-inline:2.13.0'
     testImplementation "org.mockito:mockito-core:3.0.0"
+
+    //裁減圖套件
+    api 'com.theartofdev.edmodo:android-image-cropper:2.8.+'
+    implementation 'androidx.work:work-runtime:2.3.2'
+    implementation 'com.github.bumptech.glide:glide:4.11.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.11.0'
+    implementation 'com.github.LuckSiege.PictureSelector:picture_library:v2.4.6'
 }

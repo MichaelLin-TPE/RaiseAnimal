@@ -14,4 +14,6 @@ public interface FavoriteVu {
     void intentToAnotherApp(AnimalFavorite data);
 
     void removeUserData(ArrayList<AnimalFavorite> dataArray, ArrayList<Boolean> isOpenArray);
+
+    void showNoDataView(boolean isShow);
 }

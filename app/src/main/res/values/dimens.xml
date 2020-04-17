@@ -22,4 +22,7 @@
     <dimen name="take_me_width">120dp</dimen>
     <dimen name="take_me_height">40dp</dimen>
     <dimen name="favorite_icon_size">25dp</dimen>
+    <dimen name="edit_btn_height">30dp</dimen>
+    <dimen name="edit_photo">100dp</dimen>
+    <dimen name="edit_photo_height">60dp</dimen>
 </resources>

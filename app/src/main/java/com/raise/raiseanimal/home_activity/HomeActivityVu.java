@@ -11,5 +11,5 @@ public interface HomeActivityVu {
 
     void setViewPager();
 
-    void sendMailToMe();
+    void intentToStaffPlace();
 }

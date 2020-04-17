@@ -37,4 +37,17 @@ public class UserDataManager {
     public String getFavorite(){
         return sp.getString("favorite","");
     }
+
+    public void saveAccountAndPassword(String account,String password){
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("account",account);
+        editor.putString("password",password);
+        editor.apply();
+    }
+    public String getAcccount(){
+        return sp.getString("account","");
+    }
+    public String getPassword(){
+        return sp.getString("password","");
+    }
 }

@@ -9,5 +9,5 @@ public interface HomeActivityPresenter {
 
     void onTabUnselectedListener(int position, ArrayList<Integer> notPressedIconArray);
 
-    void onMainButtonClickListener();
+    void onStaffPlaceClickListener();
 }

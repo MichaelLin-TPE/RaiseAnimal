@@ -3,6 +3,7 @@ package com.raise.raiseanimal.animal_fragment;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class AnimalFavorite implements Serializable {
     @SerializedName("name")
@@ -28,6 +29,16 @@ public class AnimalFavorite implements Serializable {
     @SerializedName("found_place")
     private String foundPlace;
 
+    @SerializedName("personality")
+    private ArrayList<String> personality;
+
+    public ArrayList<String> getPersonality() {
+        return personality;
+    }
+
+    public void setPersonality(ArrayList<String> personality) {
+        this.personality = personality;
+    }
 
     public boolean isFavorite() {
         return isFavorite;

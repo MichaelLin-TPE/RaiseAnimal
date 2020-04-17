@@ -206,6 +206,8 @@ public class AnimalFragment extends Fragment implements AnimalVu {
                             ArrayList<AnimalObject> dataArray = gson.fromJson(json,new TypeToken<List<AnimalObject>>(){}.getType());
                             if (dataArray != null && dataArray.size() != 0){
                                 presenter.catchData(dataArray);
+                            }else {
+                                presenter.catchNoData();
                             }
 
 
@@ -389,9 +391,10 @@ public class AnimalFragment extends Fragment implements AnimalVu {
             fav.setSize(data.getAnimalBodyType());
             fav.setLocation(data.getShleterName());
             fav.setFoundPlace(data.getAnimalFoundPlace());
-            fav.setStory("");
             fav.setSex(data.getAnimalSex());
             fav.setFavorite(true);
+            fav.setStory(data.getStory());
+            fav.setPersonality(data.getPersonality());
             favArray.add(fav);
             String favJson = gson.toJson(favArray);
             Log.i("Michael","即將儲存的json : "+favJson);
@@ -425,8 +428,12 @@ public class AnimalFragment extends Fragment implements AnimalVu {
             fav.setSize(data.getAnimalBodyType());
             fav.setLocation(data.getShleterName());
             fav.setFoundPlace(data.getAnimalFoundPlace());
-            fav.setStory("");
             fav.setSex(data.getAnimalSex());
+            fav.setFavorite(true);
+            fav.setStory(data.getStory());
+            fav.setPersonality(data.getPersonality());
+            fav.setStory(data.getStory());
+            fav.setPersonality(data.getPersonality());
             favArray.add(fav);
             String favJson = gson.toJson(favArray);
             Log.i("Michael","即將儲存的json : "+favJson);

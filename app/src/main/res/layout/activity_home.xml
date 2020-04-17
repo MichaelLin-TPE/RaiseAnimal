@@ -27,9 +27,17 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+
+    <View
+        android:id="@+id/home_line"
+        app:layout_constraintTop_toBottomOf="@id/home_toolbar"
+        android:background="@color/grey"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/home_view_pager"
-        app:layout_constraintTop_toBottomOf="@id/home_toolbar"
+        app:layout_constraintTop_toBottomOf="@id/home_line"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/home_tab_layout"

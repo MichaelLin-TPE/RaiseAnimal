@@ -28,7 +28,7 @@ public class HomeActivityPresenterImpl implements HomeActivityPresenter {
     }
 
     @Override
-    public void onMainButtonClickListener() {
-        mView.sendMailToMe();
+    public void onStaffPlaceClickListener() {
+        mView.intentToStaffPlace();
     }
 }

@@ -44,6 +44,10 @@ public class TagViewHolder extends RecyclerView.ViewHolder {
         }else {
             tagArray.add("大型");
         }
+        if (data.getPersonality() != null && data.getPersonality().size() != 0){
+            tagArray.addAll(data.getPersonality());
+        }
+
 
         TagViewAdapter adapter = new TagViewAdapter(tagArray,context);
         recyclerView.setAdapter(adapter);
@@ -64,6 +68,9 @@ public class TagViewHolder extends RecyclerView.ViewHolder {
             tagArray.add("小型");
         }else {
             tagArray.add("大型");
+        }
+        if (newData.getPersonality() != null && newData.getPersonality().size() != 0){
+            tagArray.addAll(newData.getPersonality());
         }
 
         TagViewAdapter adapter = new TagViewAdapter(tagArray,context);

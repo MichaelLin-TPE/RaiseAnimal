@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -35,6 +37,10 @@ public class FavoriteFragment extends Fragment implements FavoriteVu {
     private Gson gson;
 
     private Context context;
+
+    private TextView tvInfo;
+
+    private ImageView ivHeart;
 
     private FavoriteAdapter adapter;
 
@@ -79,6 +85,8 @@ public class FavoriteFragment extends Fragment implements FavoriteVu {
     }
 
     private void initView(View view) {
+        tvInfo = view.findViewById(R.id.favorite_text_info);
+        ivHeart = view.findViewById(R.id.favorite_icon);
         recyclerView = view.findViewById(R.id.favorite_recycler_view);
     }
 
@@ -89,8 +97,10 @@ public class FavoriteFragment extends Fragment implements FavoriteVu {
         gson = new Gson();
         dataArray = gson.fromJson(UserDataManager.getInstance(context).getFavorite(), new TypeToken<List<AnimalFavorite>>() {
         }.getType());
-        if (dataArray != null) {
+        if (dataArray != null && dataArray.size() != 0) {
             presenter.onCatchData(dataArray);
+        }else {
+            presenter.onCatchNoData();
         }
     }
 
@@ -196,5 +206,11 @@ public class FavoriteFragment extends Fragment implements FavoriteVu {
         }
         String json = gson.toJson(dataArray);
         UserDataManager.getInstance(context).saveFavorite(json);
+    }
+
+    @Override
+    public void showNoDataView(boolean isShow) {
+        tvInfo.setVisibility(isShow ? View.VISIBLE : View.GONE);
+        ivHeart.setVisibility(isShow ? View.VISIBLE : View.GONE);
     }
 }

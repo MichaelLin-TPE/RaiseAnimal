@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.google.android.material.tabs.TabLayout;
 import com.raise.raiseanimal.R;
+import com.raise.raiseanimal.staff_place.StaffActivity;
 
 import java.util.ArrayList;
 
@@ -33,7 +34,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.main_menu,menu);
+        getMenuInflater().inflate(R.menu.main_menu, menu);
 
         return true;
     }
@@ -41,8 +42,8 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        if (item.getItemId() == R.id.main_mail){
-            presenter.onMainButtonClickListener();
+        if (item.getItemId() == R.id.staff_place) {
+            presenter.onStaffPlaceClickListener();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -56,7 +57,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
 
         ArrayList<String> tabArray = new ArrayList<>();
         tabArray.add(getString(R.string.animal));
-        tabArray.add(getString(R.string.staff));
+        tabArray.add(getString(R.string.basic));
         tabArray.add(getString(R.string.favorite));
 
 
@@ -82,27 +83,26 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
         //未點擊的icon
         final ArrayList<Integer> notPressedIconArray = new ArrayList<>();
         notPressedIconArray.add(R.drawable.pets_not_pressed);
-        notPressedIconArray.add(R.drawable.staff_not_pressed);
+        notPressedIconArray.add(R.drawable.document_not_press);
         notPressedIconArray.add(R.drawable.heart_not_pressed);
 
         //點擊的icon
         final ArrayList<Integer> pressedIconArray = new ArrayList<>();
         pressedIconArray.add(R.drawable.pets_pressed);
-        pressedIconArray.add(R.drawable.staff_pressed);
+        pressedIconArray.add(R.drawable.document_pressed);
         pressedIconArray.add(R.drawable.heart_pressed);
 
 
-
         tabLayout.removeAllTabs();
-        for (int i = 0 ; i < tabArray.size() ; i ++){
+        for (int i = 0; i < tabArray.size(); i++) {
             TabLayout.Tab tab = tabLayout.newTab();
-            tab.setCustomView(prepareView(tabArray.get(i),notPressedIconArray.get(i)));
+            tab.setCustomView(prepareView(tabArray.get(i), notPressedIconArray.get(i)));
             tab.setTag(tabArray.get(i));
             tabLayout.addTab(tab);
         }
         //設置第一個點擊的TAB
         final TabLayout.Tab firstTab = tabLayout.getTabAt(0);
-        if (firstTab != null && firstTab.getCustomView() != null){
+        if (firstTab != null && firstTab.getCustomView() != null) {
             ivIcon = firstTab.getCustomView().findViewById(R.id.bottom_tab_icon);
             ivIcon.setImageResource(pressedIconArray.get(0));
         }
@@ -111,14 +111,14 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 
-                presenter.onTabSelectedListener(tab.getPosition(),pressedIconArray);
+                presenter.onTabSelectedListener(tab.getPosition(), pressedIconArray);
 
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
 
-                presenter.onTabUnselectedListener(tab.getPosition(),notPressedIconArray);
+                presenter.onTabUnselectedListener(tab.getPosition(), notPressedIconArray);
 
             }
 
@@ -132,7 +132,7 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
     @Override
     public void changeTabSelectedIcon(int position, ArrayList<Integer> pressedIconArray) {
         TabLayout.Tab singleTab = tabLayout.getTabAt(position);
-        if (singleTab != null && singleTab.getCustomView() != null){
+        if (singleTab != null && singleTab.getCustomView() != null) {
             ivIcon = singleTab.getCustomView().findViewById(R.id.bottom_tab_icon);
             ivIcon.setImageResource(pressedIconArray.get(position));
         }
@@ -157,24 +157,14 @@ public class HomeActivity extends AppCompatActivity implements HomeActivityVu {
     }
 
     @Override
-    public void sendMailToMe() {
-        try {
-            String emailBody = getString(R.string.email_body);
-            Intent emailIntent = new Intent(Intent.ACTION_SEND);
-            emailIntent.setData(Uri.parse("mailto:"));
-            emailIntent.setType("message/rfc822");
-            emailIntent.putExtra(Intent.EXTRA_EMAIL,new String[]{"raiseanimalvolunteers@gmail.com"});
-            emailIntent.putExtra(Intent.EXTRA_SUBJECT, getString(R.string.question_report));
-            emailIntent.putExtra(Intent.EXTRA_TEXT, emailBody);
-            startActivity(emailIntent);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public void intentToStaffPlace() {
+        Intent it = new Intent(this, StaffActivity.class);
+        startActivity(it);
     }
 
     private View prepareView(String title, Integer icon) {
 
-        View view = View.inflate(this,R.layout.home_bottom_tablayout_custom_view,null);
+        View view = View.inflate(this, R.layout.home_bottom_tablayout_custom_view, null);
         TextView tvTitle = view.findViewById(R.id.bottom_tab_title);
         ivIcon = view.findViewById(R.id.bottom_tab_icon);
         tvTitle.setText(title);

@@ -20,4 +20,6 @@ public interface AnimalPresenter {
     void onOpenFilterClickListener(boolean isOpenFilter);
 
     void onFavoriteIconClickListener(AnimalObject data);
+
+    void catchNoData();
 }

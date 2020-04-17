@@ -14,4 +14,6 @@ public interface FavoritePresenter {
     void onShareClick(AnimalFavorite data);
 
     void onHeartClick(AnimalFavorite data, ArrayList<AnimalFavorite> dataArray, ArrayList<Boolean> isOpenArray);
+
+    void onCatchNoData();
 }

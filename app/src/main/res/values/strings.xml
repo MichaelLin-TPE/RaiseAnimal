@@ -28,4 +28,24 @@
     <string name="email">寄信</string>
     <string name="email_body">若有任何意見跟問題可以寫在這寄給我唷,我會依依的回覆.</string>
     <string name="question_report">我對這個APP有意見!</string>
+    <string name="basic">聯絡</string>
+    <string name="vip">志工專區</string>
+    <string name="staff_place">志工專區</string>
+    <string name="account">帳號 :</string>
+    <string name="enter_account">請輸入帳號</string>
+    <string name="enter_password">請輸入密碼</string>
+    <string name="login">登入</string>
+    <string name="add_favorite">我的最愛還沒有任何狗狗唷.</string>
+    <string name="staff_edit">志工編輯區</string>
+    <string name="edit_name">編輯狗狗名字</string>
+    <string name="edit_photo">編輯狗狗的照片</string>
+    <string name="edit_personality">編輯狗狗的個性</string>
+    <string name="edit_story">編輯狗狗的故事</string>
+    <string name="edit_save">編輯完成</string>
+    <string name="confirm">確定</string>
+    <string name="cancel">取消</string>
+    <string name="change_name">更改名字</string>
+    <string name="enter_personality">輸入你要的個性(已逗點(,)做區隔)</string>
+    <string name="change_personality">更改個性TAG</string>
+    <string name="changet_story">更改故事</string>
 </resources>

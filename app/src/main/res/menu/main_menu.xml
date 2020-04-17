@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/main_mail"
-        android:icon="@drawable/gmail"
-        android:title="@string/email"
+        android:id="@+id/staff_place"
+        android:icon="@drawable/staff_pressed"
+        android:title="@string/vip"
         app:showAsAction="always"/>
 </menu>

@@ -9,6 +9,7 @@
     android:layout_height="wrap_content">
 
     <ImageView
+        android:layout_marginStart="20dp"
         android:id="@+id/detail_icon"
         android:src="@drawable/foot_icon"
         app:layout_constraintTop_toTopOf="parent"

@@ -14,6 +14,7 @@ public class FavoritePresenterImpl implements FavoritePresenter{
 
     @Override
     public void onCatchData(ArrayList<AnimalFavorite> dataArray) {
+        mView.showNoDataView(false);
         mView.showRecyclerView(dataArray);
     }
 
@@ -50,5 +51,10 @@ public class FavoritePresenterImpl implements FavoritePresenter{
         }
 
 
+    }
+
+    @Override
+    public void onCatchNoData() {
+        mView.showNoDataView(true);
     }
 }
