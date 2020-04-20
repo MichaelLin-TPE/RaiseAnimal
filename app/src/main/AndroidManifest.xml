@@ -22,6 +22,7 @@
         <activity android:name=".edit_activity.EditActivity"></activity>
         <activity android:name=".staff_place.StaffActivity" />
         <activity android:name=".detail_activity.DetailActivity" />
+
         <activity
             android:name=".home_activity.HomeActivity"
             android:screenOrientation="portrait" />

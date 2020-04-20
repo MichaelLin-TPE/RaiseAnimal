@@ -48,4 +48,8 @@
     <string name="enter_personality">輸入你要的個性(已逗點(,)做區隔)</string>
     <string name="change_personality">更改個性TAG</string>
     <string name="changet_story">更改故事</string>
+    <string name="home_of_animal_official">名稱 : 新北市板橋區動物之家</string>
+    <string name="address">地址 : 220新北市板橋區板城路28-1號</string>
+    <string name="phone">電話 : 02-8966-2158</string>
+    <string name="open">開放時間:周二~周日\n上午10-12點/下午14-16點</string>
 </resources>
