@@ -83,7 +83,7 @@ public class AnimalPresenterImpl implements AnimalPresenter {
                             Log.i("Michael", "catchFirebaseArraySize : " + catchFirebaseArray.size() + " dataArraySize : " + dataArray.size());
 
                             if (dataArray.size() != catchFirebaseArray.size() && catchFirebaseArray.size() < dataArray.size()) {
-                                for (int i = 0; i < catchFirebaseArray.size(); i++) {
+                                for (int i = 0; i < dataArray.size(); i++) {
                                     for (int j = 0; j < catchFirebaseArray.size(); j++) {
                                         if (dataArray.get(i).getAnimalId() == catchFirebaseArray.get(j).getAnimalId()) {
                                             isDataChange = false;

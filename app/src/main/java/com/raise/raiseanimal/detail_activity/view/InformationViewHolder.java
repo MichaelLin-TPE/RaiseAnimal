@@ -39,7 +39,7 @@ public class InformationViewHolder extends RecyclerView.ViewHolder {
         }else {
             tvNoSex.setText(String.format(Locale.getDefault(),"是否已結育 : %s","否"));
         }
-        tvLocation.setText(String.format(Locale.getDefault(),"目前位置 : %s",data.getAnimalPlace()));
+        tvLocation.setText(String.format(Locale.getDefault(),"目前位置 : %s",data.getShleterName()));
 
         tvWhy.setText(String.format(Locale.getDefault(),"尋獲地 : %s",data.getAnimalFoundPlace()));
 

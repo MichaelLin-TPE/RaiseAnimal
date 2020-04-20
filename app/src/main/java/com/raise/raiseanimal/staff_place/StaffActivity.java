@@ -170,7 +170,9 @@ public class StaffActivity extends AppCompatActivity implements StaffActivityVu{
     @Override
     protected void onResume() {
         super.onResume();
-        searchData();
+        String account = UserDataManager.getInstance(this).getAcccount();
+        String password = UserDataManager.getInstance(this).getPassword();
+        presenter.onLoginButtonClickListener(account,password);
     }
 
     @Override
