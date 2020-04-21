@@ -52,4 +52,6 @@
     <string name="address">地址 : 220新北市板橋區板城路28-1號</string>
     <string name="phone">電話 : 02-8966-2158</string>
     <string name="open">開放時間:周二~周日\n上午10-12點/下午14-16點</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="error_permission_map">沒取得權限</string>
 </resources>
