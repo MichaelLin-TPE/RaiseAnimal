@@ -49,6 +49,7 @@ public class StaffAdapter extends RecyclerView.Adapter<StaffAdapter.ViewHolder> 
 
         if (data.getAlbumFile() == null || data.getAlbumFile().isEmpty()){
             holder.ivPhoto.setBackground(ContextCompat.getDrawable(context,R.drawable.story_shape));
+            holder.ivPhoto.setImageResource(R.drawable.no_pic);
         }else {
             holder.ivPhoto.setBackground(null);
             ImageLoaderManager.getInstance(context).setPhotoUrl(data.getAlbumFile(),holder.ivPhoto);

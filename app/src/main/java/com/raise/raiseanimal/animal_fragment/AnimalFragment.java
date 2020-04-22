@@ -5,6 +5,8 @@ import android.animation.AnimatorListenerAdapter;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
@@ -43,6 +45,7 @@ import com.raise.raiseanimal.animal_fragment.filter.FilterPresenter;
 import com.raise.raiseanimal.animal_fragment.filter.FilterPresenterImpl;
 import com.raise.raiseanimal.connect.gson_object.AnimalObject;
 import com.raise.raiseanimal.detail_activity.DetailActivity;
+import com.raise.raiseanimal.tool.GooglePlayUpdater;
 import com.raise.raiseanimal.tool.UserDataManager;
 
 import java.util.ArrayList;
@@ -188,7 +191,7 @@ public class AnimalFragment extends Fragment implements AnimalVu {
     @Override
     public void onResume() {
         super.onResume();
-
+        presenter.onCheckGooglePlayVersion();
     }
 
     private void searchData() {
@@ -405,7 +408,7 @@ public class AnimalFragment extends Fragment implements AnimalVu {
             boolean isRepeat = false;
             int index = 0;
             for (AnimalFavorite favorite : favArray){
-                if (data.getAnimalId() == favorite.getNumber()){
+                if (data.getAnimalId().equals(favorite.getNumber())){
                     isRepeat = true;
                     break;
                 }
@@ -442,5 +445,32 @@ public class AnimalFragment extends Fragment implements AnimalVu {
             animalAdapter.notifyDataSetChanged();
         }
 
+    }
+
+    public String getCurrentVersion(){
+        try {
+            PackageInfo pInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return pInfo.versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    @Override
+    public void checkGooglePlayVersion() {
+        GooglePlayUpdater updater = new GooglePlayUpdater();
+        updater.execute();
+        updater.setOnCheckUpdateListener(new GooglePlayUpdater.OnCheckUpdateListener() {
+            @Override
+            public void onSuccess(String result) {
+                Log.i("Michael","lastVersion : "+result + " currentVersion : "+getCurrentVersion());
+            }
+
+            @Override
+            public void onFail(String errorCode) {
+                Log.i("Michael","取得Version 錯誤 :"+errorCode);
+            }
+        });
     }
 }

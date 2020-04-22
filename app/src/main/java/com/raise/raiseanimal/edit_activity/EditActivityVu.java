@@ -2,6 +2,8 @@ package com.raise.raiseanimal.edit_activity;
 
 import android.graphics.Bitmap;
 
+import com.raise.raiseanimal.connect.gson_object.AnimalObject;
+
 public interface EditActivityVu {
     void showEditNameDialog();
 
@@ -11,7 +13,7 @@ public interface EditActivityVu {
 
     void showPhoto(Bitmap bitmap);
 
-    void showTitle(int animalId);
+    void showTitle(String animalId);
 
     void showPersonalityDialog();
 
@@ -28,4 +30,6 @@ public interface EditActivityVu {
     void closePage();
 
     void enableButton(boolean isEnable);
+
+    void showAnimalsDog(AnimalObject data);
 }

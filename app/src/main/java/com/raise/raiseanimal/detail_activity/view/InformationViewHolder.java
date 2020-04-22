@@ -1,5 +1,6 @@
 package com.raise.raiseanimal.detail_activity.view;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -28,7 +29,7 @@ public class InformationViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setData(AnimalObject data) {
-        tvNumber.setText(String.format(Locale.getDefault(),"編號 : %d",data.getAnimalId()));
+        tvNumber.setText(String.format(Locale.getDefault(),"編號 : %s",data.getAnimalId()));
         if (data.getAnimalTitle().isEmpty()){
             tvName.setText(String.format(Locale.getDefault(),"名字 : %s","尚未提供"));
         }else {
@@ -60,7 +61,7 @@ public class InformationViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setNewData(AnimalFavorite newData) {
-        tvNumber.setText(String.format(Locale.getDefault(),"編號 : %d",newData.getNumber()));
+        tvNumber.setText(String.format(Locale.getDefault(),"編號 : %s",newData.getNumber()));
         if (newData.getName().isEmpty()){
             tvName.setText(String.format(Locale.getDefault(),"名字 : %s","尚未提供"));
         }else {

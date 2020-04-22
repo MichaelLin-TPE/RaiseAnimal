@@ -92,7 +92,7 @@ public class FavoriteFragment extends Fragment implements FavoriteVu {
 
     @Override
     public void onResume() {
-        Log.i("Michael", "favorite onResume");
+        Log.i("Michael", "favorite onResume : "+UserDataManager.getInstance(context).getFavorite());
         super.onResume();
         gson = new Gson();
         dataArray = gson.fromJson(UserDataManager.getInstance(context).getFavorite(), new TypeToken<List<AnimalFavorite>>() {

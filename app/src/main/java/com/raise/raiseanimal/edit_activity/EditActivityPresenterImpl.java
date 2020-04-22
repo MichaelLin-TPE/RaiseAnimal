@@ -38,6 +38,7 @@ public class EditActivityPresenterImpl implements EditActivityPresenter {
         this.dataArray = dataArray;
         this.itemPosition = itemPosition;
         this.data = data;
+        mView.showAnimalsDog(data);
     }
 
     @Override
@@ -89,7 +90,7 @@ public class EditActivityPresenterImpl implements EditActivityPresenter {
 
     @Override
     public void onShowTitle(AnimalObject data) {
-        mView.showTitle(data.getAnimalId());
+        mView.showTitle(data.getAnimalId()+"");
     }
 
     @Override

@@ -19,7 +19,7 @@ public class AnimalFavorite implements Serializable {
     @SerializedName("size")
     private String size;
     @SerializedName("number")
-    private int number;
+    private String number;
     @SerializedName("story")
     private String story;
     @SerializedName("is_favorite")
@@ -112,11 +112,11 @@ public class AnimalFavorite implements Serializable {
         this.size = size;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 

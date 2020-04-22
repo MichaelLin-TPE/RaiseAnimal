@@ -27,10 +27,12 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
+import com.nostra13.universalimageloader.core.ImageLoader;
 import com.raise.raiseanimal.MainActivity;
 import com.raise.raiseanimal.R;
 import com.raise.raiseanimal.connect.gson_object.AnimalObject;
 import com.raise.raiseanimal.tool.GlideEngine;
+import com.raise.raiseanimal.tool.ImageLoaderManager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -48,7 +50,7 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
 
     private TextView tvNumber,tvName,tvPersonality,tvStory;
 
-    private ImageView ivPhoto;
+    private ImageView ivPhoto,ivAnimalPhoto;
 
     private ArrayList<AnimalObject> dataArray;
 
@@ -74,7 +76,6 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
         initPresenter();
         initView();
         initBundle();
-
         presenter.onShowTitle(data);
         presenter.onCatchAllData(dataArray,data,itemPosition);
     }
@@ -88,7 +89,7 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
                 presenter.onBackButtonClickListener();
             }
         });
-
+        ivAnimalPhoto = findViewById(R.id.edit_animal_photo);
         ivPhoto = findViewById(R.id.edit_photo);
         tvName = findViewById(R.id.edit_name);
         tvPersonality = findViewById(R.id.edit_personality);
@@ -213,8 +214,8 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
     }
 
     @Override
-    public void showTitle(int animalId) {
-        tvNumber.setText(String.format(Locale.getDefault(),"目前更改狗狗的編號為 : %d",animalId));
+    public void showTitle(String animalId) {
+        tvNumber.setText(String.format(Locale.getDefault(),"目前更改狗狗的編號為 : %s",animalId));
     }
 
     @Override
@@ -308,6 +309,11 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
     @Override
     public void enableButton(boolean isEnable) {
         btnSave.setEnabled(!isEnable);
+    }
+
+    @Override
+    public void showAnimalsDog(AnimalObject data) {
+        ImageLoaderManager.getInstance(this).setPhotoUrl(data.getAlbumFile(),ivAnimalPhoto);
     }
 
 }

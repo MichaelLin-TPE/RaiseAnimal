@@ -5,10 +5,11 @@
     android:layout_height="match_parent"
     android:padding="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".staff_fragment.StaffFragment">
+    tools:context=".basic_information.BasicInfoFragment">
 
-    <ImageView
+    <com.makeramen.roundedimageview.RoundedImageView
         android:layout_marginTop="20dp"
+        app:riv_corner_radius="10dip"
         android:id="@+id/basic_icon"
         android:contentDescription="@null"
         app:layout_constraintTop_toTopOf="parent"

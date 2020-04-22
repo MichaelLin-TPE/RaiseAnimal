@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
 public class AnimalObject implements Serializable {
     @SerializedName("animal_id")
-    private int animalId;
+    private String animalId;
     @SerializedName("animal_subid")
     private String animalSubid;
     @SerializedName("animal_area_pkid")
@@ -99,11 +99,11 @@ public class AnimalObject implements Serializable {
         this.shleterName = shleterName;
     }
 
-    public int getAnimalId() {
+    public String getAnimalId() {
         return animalId;
     }
 
-    public void setAnimalId(int animalId) {
+    public void setAnimalId(String animalId) {
         this.animalId = animalId;
     }
 

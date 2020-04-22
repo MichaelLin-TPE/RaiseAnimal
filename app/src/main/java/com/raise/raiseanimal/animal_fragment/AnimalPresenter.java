@@ -22,4 +22,6 @@ public interface AnimalPresenter {
     void onFavoriteIconClickListener(AnimalObject data);
 
     void catchNoData();
+
+    void onCheckGooglePlayVersion();
 }

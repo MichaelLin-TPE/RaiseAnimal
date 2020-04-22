@@ -85,7 +85,7 @@ public class AnimalPresenterImpl implements AnimalPresenter {
                             if (dataArray.size() != catchFirebaseArray.size() && catchFirebaseArray.size() < dataArray.size()) {
                                 for (int i = 0; i < dataArray.size(); i++) {
                                     for (int j = 0; j < catchFirebaseArray.size(); j++) {
-                                        if (dataArray.get(i).getAnimalId() == catchFirebaseArray.get(j).getAnimalId()) {
+                                        if (dataArray.get(i).getAnimalSubid().equals(catchFirebaseArray.get(j).getAnimalId())) {
                                             isDataChange = false;
                                             break;
                                         }
@@ -101,7 +101,7 @@ public class AnimalPresenterImpl implements AnimalPresenter {
                                         object.setAnimalFoundPlace(dataArray.get(i).getAnimalFoundPlace());
                                         object.setAnimalTitle(dataArray.get(i).getAnimalTitle());
                                         object.setAnimalColour(dataArray.get(i).getAnimalColour());
-                                        object.setAnimalId(dataArray.get(i).getAnimalId());
+                                        object.setAnimalId(dataArray.get(i).getAnimalSubid());
                                         object.setAnimalKind(dataArray.get(i).getAnimalKind());
                                         object.setStory("");
                                         object.setPersonality(new ArrayList<String>());
@@ -134,6 +134,7 @@ public class AnimalPresenterImpl implements AnimalPresenter {
         if (dataArray != null) {
             //這邊顯示有多少動物
             this.catchFirebaseArray = dataArray;
+            Log.i("Michael","擷取後的數字 : "+dataArray.get(0).getAnimalId().substring(5));
             Log.i("Michael", "json != null");
             mView.showProgress(false);
             mView.setRecyclerView(dataArray);
@@ -409,7 +410,7 @@ public class AnimalPresenterImpl implements AnimalPresenter {
                             object.setAnimalFoundPlace(data.getAnimalFoundPlace());
                             object.setAnimalTitle(data.getAnimalTitle());
                             object.setAnimalColour(data.getAnimalColour());
-                            object.setAnimalId(data.getAnimalId());
+                            object.setAnimalId(data.getAnimalSubid().substring(5));
                             object.setAnimalKind(data.getAnimalKind());
                             object.setStory("");
                             object.setPersonality(new ArrayList<String>());
@@ -426,5 +427,10 @@ public class AnimalPresenterImpl implements AnimalPresenter {
                 Log.i("Michael","錯誤 : "+errorCode);
             }
         });
+    }
+
+    @Override
+    public void onCheckGooglePlayVersion() {
+        mView.checkGooglePlayVersion();
     }
 }

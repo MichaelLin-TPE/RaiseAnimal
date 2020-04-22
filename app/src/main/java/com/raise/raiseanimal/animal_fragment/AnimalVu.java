@@ -24,4 +24,6 @@ public interface AnimalVu {
     void openFilterView(boolean isShow);
 
     void saveUserFavoriteData(AnimalObject data);
+
+    void checkGooglePlayVersion();
 }

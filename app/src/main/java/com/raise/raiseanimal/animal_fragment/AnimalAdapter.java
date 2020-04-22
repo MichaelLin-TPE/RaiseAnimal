@@ -1,6 +1,7 @@
 package com.raise.raiseanimal.animal_fragment;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,9 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.makeramen.roundedimageview.RoundedImageView;
+import com.nostra13.universalimageloader.core.DisplayImageOptions;
+import com.nostra13.universalimageloader.core.ImageLoader;
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.raise.raiseanimal.R;
 import com.raise.raiseanimal.connect.gson_object.AnimalObject;
 import com.raise.raiseanimal.tool.ImageLoaderManager;
@@ -50,7 +54,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         //設定是否有最愛
         if (favArray != null && favArray.size() != 0){
             for (AnimalFavorite fav : favArray){
-                if (fav.getNumber() == data.getAnimalId()){
+                if (fav.getNumber().equals(data.getAnimalId())){
                     holder.ivFavorite.setImageResource(R.drawable.heart_pressed);
                     break;
                 }else {
@@ -60,6 +64,7 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         }
         if (data.getAlbumFile() == null || data.getAlbumFile().isEmpty()){
             holder.ivPhoto.setBackground(ContextCompat.getDrawable(context,R.drawable.story_shape));
+            holder.ivPhoto.setImageResource(R.drawable.no_pic);
         }else {
             holder.ivPhoto.setBackground(null);
             ImageLoaderManager.getInstance(context).setPhotoUrl(data.getAlbumFile(),holder.ivPhoto);

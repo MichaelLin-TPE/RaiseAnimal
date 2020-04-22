@@ -25,7 +25,8 @@
     <dimen name="edit_btn_height">30dp</dimen>
     <dimen name="edit_photo">100dp</dimen>
     <dimen name="edit_photo_height">60dp</dimen>
-    <dimen name="big_icon">80dp</dimen>
+    <dimen name="big_icon">100dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="map_height">300dp</dimen>
+    <dimen name="edit_animal_photo">170dp</dimen>
 </resources>
