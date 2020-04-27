@@ -22,6 +22,7 @@ import com.raise.raiseanimal.connect.gson_object.AnimalObject;
 import com.raise.raiseanimal.tool.ImageLoaderManager;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder> {
 
@@ -71,9 +72,9 @@ public class AnimalAdapter extends RecyclerView.Adapter<AnimalAdapter.ViewHolder
         }
 
         if (data.getAnimalTitle().isEmpty()){
-            holder.tvTitle.setText("未命名");
+            holder.tvTitle.setText(data.getAnimalId());
         }else {
-            holder.tvTitle.setText(data.getAnimalTitle());
+            holder.tvTitle.setText(String.format(Locale.getDefault(),"%s %s",data.getAnimalId(),data.getAnimalTitle()));
         }
 
         holder.ivPhoto.setOnClickListener(new View.OnClickListener() {

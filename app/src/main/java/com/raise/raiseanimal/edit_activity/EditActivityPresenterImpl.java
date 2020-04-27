@@ -14,13 +14,11 @@ public class EditActivityPresenterImpl implements EditActivityPresenter {
 
     private String message;
 
-    private String preName;
 
     private String[] personalityArray;
 
     private String downloadUrl;
 
-    private String preStory;
 
     private ArrayList<AnimalObject> dataArray;
     private AnimalObject data;
@@ -60,21 +58,6 @@ public class EditActivityPresenterImpl implements EditActivityPresenter {
         mView.closePage();
     }
 
-    @Override
-    public void onBtnNameClickListener() {
-        mView.showEditNameDialog();
-    }
-
-    @Override
-    public void onEditDialogConfirmClickListener(String name) {
-        if (name != null){
-            preName = name;
-            mView.showName(name);
-        }else {
-            message = "請打字好嗎?";
-            mView.showToast(message);
-        }
-    }
 
     @Override
     public void onCatchPhoto(ArrayList<Bitmap> bitmapArrayList, byte[] photoBytes) {
@@ -91,46 +74,22 @@ public class EditActivityPresenterImpl implements EditActivityPresenter {
     @Override
     public void onShowTitle(AnimalObject data) {
         mView.showTitle(data.getAnimalId()+"");
+        mView.showAlldata(data);
     }
 
-    @Override
-    public void onBtnPersonalityClickListener() {
-        mView.showPersonalityDialog();
-    }
 
     @Override
-    public void onPersonalityDialogConfirmClickListener(String personality) {
-        personalityArray =  new String[personality.split(",").length];
-        personalityArray = personality.split(",");
-        if (!personality.isEmpty() && personalityArray.length != 0){
-            mView.showPersonality(personality);
-        }else {
-            message = "請輸入個性TAG";
-            mView.showToast(message);
+    public void onBtnSaveClickListener(String AnimalName, String personality, String story) {
+        if (personality != null && !personality.isEmpty()){
+            personalityArray =  new String[personality.split(",").length];
+            personalityArray = personality.split(",");
+            if (personalityArray.length == 0){
+                message = "請輸入個性TAG";
+                mView.showToast(message);
+            }
         }
-
-    }
-
-    @Override
-    public void onBtnStoryClickListener() {
-        mView.showStoryDialog();
-    }
-
-    @Override
-    public void onStoryDialogConfirmListener(String story) {
-        if (!story.isEmpty()){
-            preStory = story;
-            mView.showStory(story);
-        }else {
-            message = "請輸入一點故事..";
-            mView.showToast(message);
-        }
-    }
-
-    @Override
-    public void onBtnSaveClickListener() {
-        if (preName != null && !preName.isEmpty()){
-            data.setAnimalTitle(preName);
+        if ( AnimalName != null && !AnimalName.isEmpty()){
+            data.setAnimalTitle(AnimalName);
         }
         if (personalityArray != null && personalityArray.length != 0){
             ArrayList<String> personArray = new ArrayList<>();
@@ -140,8 +99,8 @@ public class EditActivityPresenterImpl implements EditActivityPresenter {
         if (downloadUrl != null && !downloadUrl.isEmpty()){
             data.setAlbumFile(downloadUrl);
         }
-        if (preStory != null && !preStory.isEmpty()){
-            data.setStory(preStory);
+        if (story != null && !story.isEmpty()){
+            data.setStory(story);
         }
         dataArray.set(itemPosition,data);
         String jsonStr = gson.toJson(dataArray);

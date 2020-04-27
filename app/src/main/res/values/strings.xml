@@ -38,10 +38,10 @@
     <string name="add_favorite">我的最愛還沒有任何狗狗唷.</string>
     <string name="staff_edit">志工編輯區</string>
     <string name="edit_name">編輯狗狗名字</string>
-    <string name="edit_photo">編輯狗狗的照片</string>
+    <string name="edit_photo">點我選擇狗狗的照片</string>
     <string name="edit_personality">編輯狗狗的個性</string>
     <string name="edit_story">編輯狗狗的故事</string>
-    <string name="edit_save">編輯完成</string>
+    <string name="edit_save">點我編輯完成</string>
     <string name="confirm">確定</string>
     <string name="cancel">取消</string>
     <string name="change_name">更改名字</string>

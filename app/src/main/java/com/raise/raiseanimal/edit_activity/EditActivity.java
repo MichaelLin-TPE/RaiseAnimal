@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -48,7 +49,9 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
 
     private Button btnName,btnPhoto,btnPersonality,btnStory,btnSave;
 
-    private TextView tvNumber,tvName,tvPersonality,tvStory;
+    private TextView tvNumber;
+
+    private EditText tvName,tvPersonality,tvStory;
 
     private ImageView ivPhoto,ivAnimalPhoto;
 
@@ -101,12 +104,6 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
         btnStory = findViewById(R.id.edit_btn_story);
         btnSave = findViewById(R.id.edit_btn_save);
 
-        btnName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onBtnNameClickListener();
-            }
-        });
         btnPhoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -142,22 +139,10 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
                         });
             }
         });
-        btnPersonality.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onBtnPersonalityClickListener();
-            }
-        });
-        btnStory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                presenter.onBtnStoryClickListener();
-            }
-        });
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                presenter.onBtnSaveClickListener();
+                presenter.onBtnSaveClickListener(tvName.getText().toString(),tvPersonality.getText().toString(),tvStory.getText().toString());
             }
         });
     }
@@ -176,35 +161,10 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
         presenter = new EditActivityPresenterImpl(this);
     }
 
-    @Override
-    public void showEditNameDialog() {
-        final EditText editText = new EditText(this);
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.change_name))
-                .setView(editText)
-                .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        presenter.onEditDialogConfirmClickListener(editText.getText().toString());
-                    }
-                }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).create();
-        dialog.show();
-    }
 
     @Override
     public void showToast(String message) {
         Toast.makeText(this,message,Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void showName(String name) {
-        tvName.setVisibility(View.VISIBLE);
-        tvName.setText(String.format(Locale.getDefault(),"更改後名字為 : %s",name));
     }
 
     @Override
@@ -216,59 +176,6 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
     @Override
     public void showTitle(String animalId) {
         tvNumber.setText(String.format(Locale.getDefault(),"目前更改狗狗的編號為 : %s",animalId));
-    }
-
-    @Override
-    public void showPersonalityDialog() {
-        EditText editText = new EditText(this);
-        editText.setHint(R.string.enter_personality);
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.change_personality))
-                .setView(editText)
-                .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        presenter.onPersonalityDialogConfirmClickListener(editText.getText().toString());
-                    }
-                }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).create();
-        dialog.show();
-    }
-
-    @Override
-    public void showPersonality(String personality) {
-        tvPersonality.setVisibility(View.VISIBLE);
-        tvPersonality.setText(String.format(Locale.getDefault(),"更改後的個性TAG : %s",personality));
-    }
-
-    @Override
-    public void showStoryDialog() {
-        EditText editText = new EditText(this);
-        AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle(getString(R.string.changet_story))
-                .setView(editText)
-                .setPositiveButton(getString(R.string.confirm), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        presenter.onStoryDialogConfirmListener(editText.getText().toString());
-                    }
-                }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                }).create();
-        dialog.show();
-    }
-
-    @Override
-    public void showStory(String story) {
-        tvStory.setVisibility(View.VISIBLE);
-        tvStory.setText(String.format(Locale.getDefault(),"更改後的故事為 : \n%s",story));
     }
 
     @Override
@@ -314,6 +221,27 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
     @Override
     public void showAnimalsDog(AnimalObject data) {
         ImageLoaderManager.getInstance(this).setPhotoUrl(data.getAlbumFile(),ivAnimalPhoto);
+    }
+
+    @Override
+    public void showAlldata(AnimalObject data) {
+        tvName.setText(data.getAnimalTitle());
+        StringBuilder builder = new StringBuilder();
+        //如果最後一個個性後面不會有逗點
+        int personalitySize = data.getPersonality().size();
+        int lastItemIndex = personalitySize - 1;
+
+        int index = 0;
+        for (String title : data.getPersonality()){
+            if (lastItemIndex == index){
+                builder.append(title);
+            }else {
+                builder.append(title).append(",");
+            }
+            index++;
+        }
+        tvPersonality.setText(builder.toString());
+        tvStory.setText(data.getStory());
     }
 
 }
