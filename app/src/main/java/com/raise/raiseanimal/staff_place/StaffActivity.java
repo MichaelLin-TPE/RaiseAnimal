@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -36,6 +38,7 @@ import com.raise.raiseanimal.tool.UserDataManager;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 public class StaffActivity extends AppCompatActivity implements StaffActivityVu{
     
@@ -59,6 +62,10 @@ public class StaffActivity extends AppCompatActivity implements StaffActivityVu{
     private ArrayList<AnimalObject> dataArray;
 
     private Gson gson;
+
+    private EditText editSearch;
+
+    private TextView tvTotalSize;
 
     private StaffAdapter adapter;
 
@@ -97,7 +104,8 @@ public class StaffActivity extends AppCompatActivity implements StaffActivityVu{
                 presenter.onBackButtonClickListener();
             }
         });
-
+        editSearch = findViewById(R.id.staff_edit_search);
+        tvTotalSize = findViewById(R.id.staff_total_size);
         ivIcon = findViewById(R.id.staff_icon);
         tvSearchInfo = findViewById(R.id.staff_search_info);
         progressBar = findViewById(R.id.staff_progress);
@@ -111,6 +119,25 @@ public class StaffActivity extends AppCompatActivity implements StaffActivityVu{
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         rvFilter.setLayoutManager(new LinearLayoutManager(this));
         btnLogin = findViewById(R.id.staff_btn_login);
+
+        editSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                presenter.onTextChangedListener(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -238,5 +265,10 @@ public class StaffActivity extends AppCompatActivity implements StaffActivityVu{
         it.putExtra("dataArray",catchFirebaseArray);
         it.putExtra("itemPosition",itemPosition);
         startActivity(it);
+    }
+
+    @Override
+    public void showTotalSize(int size) {
+        tvTotalSize.setText(String.format(Locale.getDefault(),"資料共 : %d 筆",size));
     }
 }

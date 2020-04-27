@@ -14,4 +14,6 @@ public interface StaffActivityPresenter {
     void onFilterItemClickListener(String name, String value);
 
     void onAnimalItemClickListener(AnimalObject data, int itemPosition);
+
+    void onTextChangedListener(String searchData);
 }

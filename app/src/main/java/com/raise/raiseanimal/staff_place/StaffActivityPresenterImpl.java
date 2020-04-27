@@ -48,6 +48,7 @@ public class StaffActivityPresenterImpl implements StaffActivityPresenter {
 
     @Override
     public void onCatchData(ArrayList<AnimalObject> dataArray) {
+        mView.showTotalSize(dataArray.size());
         this.catchFirebaseArray = dataArray;
         Log.i("Michael", "json != null");
         mView.showProgress(false);
@@ -267,5 +268,57 @@ public class StaffActivityPresenterImpl implements StaffActivityPresenter {
     @Override
     public void onAnimalItemClickListener(AnimalObject data, int itemPosition) {
         mView.intentToEditPage(data,itemPosition,catchFirebaseArray);
+    }
+
+    @Override
+    public void onTextChangedListener(String searchData) {
+        ArrayList<AnimalObject> resultArray = new ArrayList<>();
+        if (searchData != null && !searchData.isEmpty()){
+            if (filterArray != null && filterArray.size() != 0){
+                Log.i("Michael","從篩選資料做搜尋");
+                for (AnimalObject data : filterArray){
+                    if (data.getAnimalId().contains(searchData)){
+                        resultArray.add(data);
+                    }
+                    if (searchData.equals(data.getAnimalTitle())){
+                        resultArray.add(data);
+                        break;
+                    }
+                }
+            }else if (catchFirebaseArray != null && catchFirebaseArray.size() != 0){
+                Log.i("Michael","從Firebase資料做搜尋");
+                for (AnimalObject data : catchFirebaseArray){
+                    if (data.getAnimalId().contains(searchData)){
+                        resultArray.add(data);
+                    }
+                    if (searchData.equals(data.getAnimalTitle())){
+                        resultArray.add(data);
+                        break;
+                    }
+                }
+            }
+            Log.i("Michael","找到的資料有 : "+resultArray.size()+" 筆");
+            if (resultArray.size() != 0){
+                mView.showSearchNoData(false);
+                mView.showTotalSize(resultArray.size());
+                mView.setRecyclerView(resultArray);
+            }else {
+                mView.showSearchNoData(true);
+                mView.showTotalSize(resultArray.size());
+                mView.setRecyclerView(resultArray);
+            }
+        }else {
+            if (filterArray != null && filterArray.size() != 0){
+                mView.showTotalSize(filterArray.size());
+                mView.showSearchNoData(false);
+                mView.setRecyclerView(filterArray);
+            }else {
+                if (catchFirebaseArray != null && catchFirebaseArray.size() != 0){
+                    mView.showTotalSize(catchFirebaseArray.size());
+                    mView.showSearchNoData(false);
+                    mView.setRecyclerView(catchFirebaseArray);
+                }
+            }
+        }
     }
 }

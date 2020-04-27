@@ -26,4 +26,6 @@ public interface StaffActivityVu {
     void showSearchNoData(boolean isShow);
 
     void intentToEditPage(AnimalObject data, int itemPosition, ArrayList<AnimalObject> catchFirebaseArray);
+
+    void showTotalSize(int size);
 }

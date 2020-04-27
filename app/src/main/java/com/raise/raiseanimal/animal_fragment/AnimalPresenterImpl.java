@@ -410,7 +410,6 @@ public class AnimalPresenterImpl implements AnimalPresenter {
         }else {
             mView.openFilterView(false);
         }
-
     }
 
     @Override
