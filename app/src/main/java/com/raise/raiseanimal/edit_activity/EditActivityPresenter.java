@@ -21,4 +21,6 @@ public interface EditActivityPresenter {
     void onUpdateSuccessful();
 
     void onBackButtonClickListener();
+
+    void onPreViewButtonClickListner(String name, String personality, String story);
 }

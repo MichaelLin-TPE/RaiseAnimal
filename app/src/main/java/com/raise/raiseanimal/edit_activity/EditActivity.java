@@ -1,16 +1,16 @@
 package com.raise.raiseanimal.edit_activity;
 
-import androidx.appcompat.app.AlertDialog;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -28,10 +28,9 @@ import com.luck.picture.lib.PictureSelector;
 import com.luck.picture.lib.config.PictureMimeType;
 import com.luck.picture.lib.entity.LocalMedia;
 import com.luck.picture.lib.listener.OnResultCallbackListener;
-import com.nostra13.universalimageloader.core.ImageLoader;
-import com.raise.raiseanimal.MainActivity;
 import com.raise.raiseanimal.R;
 import com.raise.raiseanimal.connect.gson_object.AnimalObject;
+import com.raise.raiseanimal.detail_activity.DetailActivity;
 import com.raise.raiseanimal.tool.GlideEngine;
 import com.raise.raiseanimal.tool.ImageLoaderManager;
 
@@ -47,7 +46,7 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
 
     private EditActivityPresenter presenter;
 
-    private Button btnName,btnPhoto,btnPersonality,btnStory,btnSave;
+    private Button btnPhoto,btnSave;
 
     private TextView tvNumber;
 
@@ -69,6 +68,24 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
 
     private static final String ANIMAL_DATA = "animal_data";
     private static final String DATA = "data";
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.edit_menu,menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (item.getItemId() == R.id.pre_view){
+            presenter.onPreViewButtonClickListner(tvName.getText().toString(),tvPersonality.getText().toString(),tvStory.getText().toString());
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,10 +115,7 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
         tvPersonality = findViewById(R.id.edit_personality);
         tvStory = findViewById(R.id.edit_story);
         tvNumber = findViewById(R.id.edit_info);
-        btnName = findViewById(R.id.edit_btn_name);
         btnPhoto = findViewById(R.id.edit_btn_photo);
-        btnPersonality = findViewById(R.id.edit_btn_personality);
-        btnStory = findViewById(R.id.edit_btn_story);
         btnSave = findViewById(R.id.edit_btn_save);
 
         btnPhoto.setOnClickListener(new View.OnClickListener() {
@@ -242,6 +256,13 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
         }
         tvPersonality.setText(builder.toString());
         tvStory.setText(data.getStory());
+    }
+
+    @Override
+    public void intentToDetailPage(AnimalObject data) {
+        Intent it = new Intent(this, DetailActivity.class);
+        it.putExtra("data",data);
+        startActivity(it);
     }
 
 }

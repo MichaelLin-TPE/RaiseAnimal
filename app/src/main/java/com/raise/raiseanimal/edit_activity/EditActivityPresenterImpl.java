@@ -58,6 +58,33 @@ public class EditActivityPresenterImpl implements EditActivityPresenter {
         mView.closePage();
     }
 
+    @Override
+    public void onPreViewButtonClickListner(String AnimalName, String personality, String story) {
+        if (personality != null && !personality.isEmpty()){
+            personalityArray =  new String[personality.split(",").length];
+            personalityArray = personality.split(",");
+            if (personalityArray.length == 0){
+                message = "請輸入個性TAG";
+                mView.showToast(message);
+            }
+        }
+        if ( AnimalName != null && !AnimalName.isEmpty()){
+            data.setAnimalTitle(AnimalName);
+        }
+        if (personalityArray != null && personalityArray.length != 0){
+            ArrayList<String> personArray = new ArrayList<>();
+            Collections.addAll(personArray, personalityArray);
+            data.setPersonality(personArray);
+        }
+        if (downloadUrl != null && !downloadUrl.isEmpty()){
+            data.setAlbumFile(downloadUrl);
+        }
+        if (story != null && !story.isEmpty()){
+            data.setStory(story);
+        }
+        mView.intentToDetailPage(data);
+    }
+
 
     @Override
     public void onCatchPhoto(ArrayList<Bitmap> bitmapArrayList, byte[] photoBytes) {
