@@ -238,7 +238,7 @@ public class EditActivity extends AppCompatActivity implements EditActivityVu{
     }
 
     @Override
-    public void showAlldata(AnimalObject data) {
+    public void showAllData(AnimalObject data) {
         tvName.setText(data.getAnimalTitle());
         StringBuilder builder = new StringBuilder();
         //如果最後一個個性後面不會有逗點

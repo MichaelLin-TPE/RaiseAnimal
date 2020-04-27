@@ -22,7 +22,7 @@ public interface EditActivityVu {
 
     void showAnimalsDog(AnimalObject data);
 
-    void showAlldata(AnimalObject data);
+    void showAllData(AnimalObject data);
 
     void intentToDetailPage(AnimalObject data);
 }

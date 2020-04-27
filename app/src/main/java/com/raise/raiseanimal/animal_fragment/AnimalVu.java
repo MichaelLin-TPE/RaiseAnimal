@@ -26,4 +26,6 @@ public interface AnimalVu {
     void saveUserFavoriteData(AnimalObject data);
 
     void checkGooglePlayVersion();
+
+    void showTotalSize(int size);
 }

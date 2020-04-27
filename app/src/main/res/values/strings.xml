@@ -55,4 +55,6 @@
     <string name="title_activity_maps">Map</string>
     <string name="error_permission_map">沒取得權限</string>
     <string name="pre_view">預覽</string>
+    <string name="search_data">資料筆數</string>
+    <string name="please_entry_search_data">搜尋 : 名字或編號</string>
 </resources>

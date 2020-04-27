@@ -19,12 +19,17 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -51,6 +56,7 @@ import com.raise.raiseanimal.tool.UserDataManager;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -68,11 +74,13 @@ public class AnimalFragment extends Fragment implements AnimalVu {
 
     private Gson gson;
 
-    private TextView tvSearchInfo,tvOpenFilter;
+    private TextView tvSearchInfo,tvOpenFilter,tvTotalSize;
 
     private ImageView ivLogo,ivOpenFilter;
 
     private FilterPresenter filterPresenter;
+
+    private EditText editSearch;
 
     private static final String ANIMAL_DATA = "animal_data";
     private static final String DATA = "data";
@@ -107,6 +115,7 @@ public class AnimalFragment extends Fragment implements AnimalVu {
     }
 
     private void initView(View view) {
+        editSearch = view.findViewById(R.id.animal_edit_search);
         recyclerView = view.findViewById(R.id.animal_recycler_view);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(context,2);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -117,11 +126,43 @@ public class AnimalFragment extends Fragment implements AnimalVu {
         ivLogo = view.findViewById(R.id.animal_icon);
         tvOpenFilter = view.findViewById(R.id.animal_filter_info);
         ivOpenFilter = view.findViewById(R.id.animal_filter_icon);
-
+        tvTotalSize = view.findViewById(R.id.animal_total_data_size);
         tvOpenFilter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 presenter.onOpenFilterClickListener(isOpenFilter);
+            }
+        });
+        ivOpenFilter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                presenter.onOpenFilterClickListener(isOpenFilter);
+            }
+        });
+        editSearch.clearFocus();
+        editSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH){
+                    presenter.onEditSearchActionListener(editSearch.getText().toString());
+                }
+                return true;
+            }
+        });
+        editSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                presenter.onEditTextChangeListener(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }
@@ -321,6 +362,7 @@ public class AnimalFragment extends Fragment implements AnimalVu {
         adapter.setOnFilterItemClickListener(new FilterItemAdapter.OnFilterItemClickListener() {
             @Override
             public void onClick(String name,String value) {
+                Log.i("Michael","點擊了篩選");
                 presenter.onFilterItemClickListener(name,value);
             }
         });
@@ -472,5 +514,18 @@ public class AnimalFragment extends Fragment implements AnimalVu {
                 Log.i("Michael","取得Version 錯誤 :"+errorCode);
             }
         });
+    }
+
+    @Override
+    public void showTotalSize(int size) {
+        if (getActivity() != null){
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tvTotalSize.setText(String.format(Locale.getDefault(),"資料共 : %d 筆",size));
+                }
+            });
+        }
+
     }
 }

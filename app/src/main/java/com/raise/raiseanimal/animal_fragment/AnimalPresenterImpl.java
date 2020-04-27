@@ -11,6 +11,7 @@ import com.raise.raiseanimal.connect.gson_object.AnimalNewObject;
 import com.raise.raiseanimal.connect.gson_object.AnimalObject;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class AnimalPresenterImpl implements AnimalPresenter {
@@ -69,7 +70,6 @@ public class AnimalPresenterImpl implements AnimalPresenter {
                 catchArray = gson.fromJson(result, new TypeToken<List<AnimalNewObject>>() {
                 }.getType());
                 if (catchArray != null && catchArray.size() != 0) {
-                    Log.i("Michael", "地址 : " + catchArray.get(0).getShelterAddress());
                     dataArray = new ArrayList<>();
                     for (AnimalNewObject object : catchArray) {
                         if (object.getShleterName().equals(mView.getPlaceString()) && object.getAnimalKind().equals(mView.getDogStr())) {
@@ -101,18 +101,39 @@ public class AnimalPresenterImpl implements AnimalPresenter {
                                         object.setAnimalFoundPlace(dataArray.get(i).getAnimalFoundPlace());
                                         object.setAnimalTitle(dataArray.get(i).getAnimalTitle());
                                         object.setAnimalColour(dataArray.get(i).getAnimalColour());
-                                        object.setAnimalId(dataArray.get(i).getAnimalSubid());
+                                        object.setAnimalId(dataArray.get(i).getAnimalSubid().substring(5));
                                         object.setAnimalKind(dataArray.get(i).getAnimalKind());
                                         object.setStory("");
                                         object.setPersonality(new ArrayList<String>());
                                         catchFirebaseArray.add(object);
                                     }
                                 }
+                                Iterator<AnimalObject> iterator = catchFirebaseArray.iterator();
+                                while (iterator.hasNext()){
+                                    AnimalObject data = iterator.next();
+                                    if (data.getAnimalId().startsWith("AAADG")){
+                                        catchFirebaseArray.remove(data);
+                                    }
+                                }
+                                Log.i("Michael","資料處理玩後的長度 : "+catchFirebaseArray.size());
                                 String jsonStr = gson.toJson(catchFirebaseArray);
+                                mView.showTotalSize(catchFirebaseArray.size());
                                 Log.i("Michael", "更新過後的Json : " + jsonStr);
                                 mView.saveJsonToFirebase(jsonStr);
                             } else {
                                 Log.i("Michael", "長度一樣不須新增");
+                                Iterator<AnimalObject> iterator = catchFirebaseArray.iterator();
+                                while (iterator.hasNext()){
+                                    AnimalObject data = iterator.next();
+                                    if (data.getAnimalId().startsWith("AAADG")){
+                                        iterator.remove();
+                                    }
+                                }
+                                Log.i("Michael","資料處理玩後的長度 : "+catchFirebaseArray.size());
+                                String jsonStr = gson.toJson(catchFirebaseArray);
+                                mView.showTotalSize(catchFirebaseArray.size());
+                                Log.i("Michael", "更新過後的Json : " + jsonStr);
+                                mView.saveJsonToFirebase(jsonStr);
                             }
                         }
                     }).start();
@@ -133,11 +154,13 @@ public class AnimalPresenterImpl implements AnimalPresenter {
     public void catchData(ArrayList<AnimalObject> dataArray) {
         if (dataArray != null) {
             //這邊顯示有多少動物
+
             this.catchFirebaseArray = dataArray;
             Log.i("Michael","擷取後的數字 : "+dataArray.get(0).getAnimalId().substring(5));
             Log.i("Michael", "json != null");
             mView.showProgress(false);
             mView.setRecyclerView(dataArray);
+            mView.showTotalSize(dataArray.size());
             startToCatchData();
 
             //這邊顯示篩選
@@ -362,12 +385,18 @@ public class AnimalPresenterImpl implements AnimalPresenter {
             }
         }
         if (isColorAll && isSizeAll && isNoSexAll && isSexAll){
+
+            mView.showTotalSize(catchFirebaseArray.size());
             mView.setRecyclerView(catchFirebaseArray);
         }else {
+
             mView.setRecyclerView(filterArray);
             if (filterArray.size() != 0){
+                mView.showTotalSize(filterArray.size());
                 mView.showSearchNoData(false);
             }else {
+                mView.showTotalSize(filterArray.size());
+
                 mView.showSearchNoData(true);
             }
         }
@@ -432,5 +461,113 @@ public class AnimalPresenterImpl implements AnimalPresenter {
     @Override
     public void onCheckGooglePlayVersion() {
         mView.checkGooglePlayVersion();
+    }
+
+    @Override
+    public void onEditSearchActionListener(String searchData) {
+
+        ArrayList<AnimalObject> resultArray = new ArrayList<>();
+
+        if (searchData != null && !searchData.isEmpty()){
+            if (filterArray != null && filterArray.size() != 0){
+                Log.i("Michael","從篩選資料做搜尋");
+                for (AnimalObject data : filterArray){
+                    if (data.getAnimalId().contains(searchData)){
+                        resultArray.add(data);
+                    }
+                    if (searchData.equals(data.getAnimalTitle())){
+                        resultArray.add(data);
+                        break;
+                    }
+                }
+            }else if (catchFirebaseArray != null && catchFirebaseArray.size() != 0){
+                Log.i("Michael","從Firebase上資料做搜尋");
+                for (AnimalObject data : catchFirebaseArray){
+                    if (data.getAnimalId().contains(searchData)){
+                        resultArray.add(data);
+                    }
+                    if (searchData.equals(data.getAnimalTitle())){
+                        resultArray.add(data);
+                        break;
+                    }
+                }
+            }
+            Log.i("Michael","找到的資料有 : "+resultArray.size()+" 筆");
+            if (resultArray.size() != 0){
+                mView.showSearchNoData(false);
+                mView.showTotalSize(resultArray.size());
+                mView.setRecyclerView(resultArray);
+            }else {
+                mView.showTotalSize(resultArray.size());
+                mView.setRecyclerView(resultArray);
+                mView.showSearchNoData(true);
+            }
+        }else {
+            if (filterArray != null && filterArray.size() != 0){
+                mView.showTotalSize(filterArray.size());
+                mView.showSearchNoData(false);
+                mView.setRecyclerView(filterArray);
+            }else {
+                mView.showTotalSize(catchFirebaseArray.size());
+                mView.showSearchNoData(false);
+                mView.setRecyclerView(catchFirebaseArray);
+            }
+        }
+
+
+
+    }
+
+    @Override
+    public void onEditTextChangeListener(String searchData) {
+        ArrayList<AnimalObject> resultArray = new ArrayList<>();
+        if (searchData != null && !searchData.isEmpty()){
+            if (filterArray != null && filterArray.size() != 0){
+                Log.i("Michael","從篩選資料做搜尋");
+                for (AnimalObject data : filterArray){
+                    if (data.getAnimalId().contains(searchData)){
+                        resultArray.add(data);
+                    }
+                    if (searchData.equals(data.getAnimalTitle())){
+                        resultArray.add(data);
+                        break;
+                    }
+                }
+            }else if (catchFirebaseArray != null && catchFirebaseArray.size() != 0){
+                Log.i("Michael","從Firebase資料做搜尋");
+                for (AnimalObject data : catchFirebaseArray){
+                    if (data.getAnimalId().contains(searchData)){
+                        resultArray.add(data);
+                    }
+                    if (searchData.equals(data.getAnimalTitle())){
+                        resultArray.add(data);
+                        break;
+                    }
+                }
+            }
+            Log.i("Michael","找到的資料有 : "+resultArray.size()+" 筆");
+            if (resultArray.size() != 0){
+                mView.showSearchNoData(false);
+                mView.showTotalSize(resultArray.size());
+                mView.setRecyclerView(resultArray);
+            }else {
+                mView.showSearchNoData(true);
+                mView.showTotalSize(resultArray.size());
+                mView.setRecyclerView(resultArray);
+            }
+        }else {
+            if (filterArray != null && filterArray.size() != 0){
+                mView.showTotalSize(filterArray.size());
+                mView.showSearchNoData(false);
+                mView.setRecyclerView(filterArray);
+            }else {
+                if (catchFirebaseArray != null && catchFirebaseArray.size() != 0){
+                    mView.showTotalSize(catchFirebaseArray.size());
+                    mView.showSearchNoData(false);
+                    mView.setRecyclerView(catchFirebaseArray);
+                }
+            }
+        }
+
     }
 }

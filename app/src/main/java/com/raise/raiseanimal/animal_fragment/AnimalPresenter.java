@@ -24,4 +24,8 @@ public interface AnimalPresenter {
     void catchNoData();
 
     void onCheckGooglePlayVersion();
+
+    void onEditSearchActionListener(String searchData);
+
+    void onEditTextChangeListener(String searchData);
 }
